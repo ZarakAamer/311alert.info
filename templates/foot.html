@@ -1,0 +1,84 @@
+{% load static %}
+
+
+<style>
+    .the_logo {
+        margin-top: 10px;
+        width: 160px;
+        height: 65px;
+        padding-bottom: 4px;
+    }
+
+    @media (max-width: 990px) {
+        .the_logo {
+            margin-top: 5px;
+
+            width: 170px;
+            height: 70px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .the_logo {
+            margin-top: 0px;
+
+            width: 140px;
+            height: 60px;
+            padding-bottom: 2px;
+
+        }
+    }
+    .last-row{
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1600.01' height='95' viewBox='0 0 1600.01 95'%3E%3Cdefs%3E%3CclipPath id='clip-path'%3E%3Crect id='bg' width='1600.01' height='95' fill='%232b044d'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg id='bg-2' data-name='bg' opacity='0.4'%3E%3Cg id='Clip' clip-path='url(%23clip-path)'%3E%3Cpath id='_03' data-name='03' d='M-3.377,5505.211s38.671-44.933,94.564-46.491c113.519-3.164,87.311,41.062,229.4,51.171,130.6,9.292,146.921-61.427,302.049-51.414,149.5,9.65,157.878,44.453,244.382,52.822,111.756,10.813,198.38-63.368,280.078-59.927,154.207,6.495,135.465,75.458,258.36,67.675,126.5-8.01,195.2-69.512,195.2-69.512l.6,128.113L-5.915,5580.293Z' transform='translate(0 -5449.536)' fill='%232b044d' opacity='0.102'/%3E%3Cpath id='_02' data-name='02' d='M-2.5,5533.222s35.74-46.232,91.47-49.739c113.188-7.122,89.851,37.969,232.427,43.108,131.054,4.724,142.81-66.486,298.407-61.9,149.953,4.422,161.978,60.979,248.922,66.319,112.325,6.9,194.086-70.221,275.914-69.635,154.452,1.106,140.161,70.645,262.418,58.582,125.848-12.417,191.94-54.16,191.94-54.16v83.986l-1603-.371Z' transform='translate(0 -5449.594)' fill='%232b044d' opacity='0.102'/%3E%3Cpath id='_01' data-name='01' d='M-2.5,5548.036s35.74-46.232,91.47-49.739c113.188-7.123,89.851,37.969,232.427,43.107,131.054,4.724,142.81-66.485,298.407-61.9,149.953,4.421,161.978,60.979,248.922,66.32,112.325,6.9,194.086-70.221,275.914-69.636,154.452,1.105,140.161,70.645,262.418,58.583,125.848-12.417,191.94-54.161,191.94-54.161V5564.6l-1603-.371Z' transform='translate(0 -5449.668)' fill='%232b044d' opacity='0.102'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+        background-size: cover;
+        height: 95px;
+        margin: auto;
+        text-align: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<footer>
+    <!-- Footer Start-->
+    <div class="footer-padding">
+        <div class="container" style="padding-top: 30px;">
+
+
+            <div class="row">
+                <div class="col-md-12" style="padding-bottom: 40px;">
+                    <a href="{% url 'home' %}"><img class="the_logo" src="{% static 'assets/311.png' %}" alt="311alert">
+                    </a>
+                </div>
+
+                <br><br>
+                <div class="col-md-12">
+
+                    <ul class="row">
+                        <li><a style="color:black; margin: 8px;" href="{% url 'home' %}">Home</a></li>
+                        <li><a style="color:black; margin: 8px;" href="{% url 'price' %}">Pricing</a></li>
+                        <li><a style="color:black; margin: 8px;" href="{% url 'contact'  %}">Contact</a></li>
+                        <li><a style="color:black; margin: 8px;" href="{% url 'privacy'  %}">Privacy & Policy</a></li>
+                        <li><a style="color:black; margin: 8px;" href="{% url 'terms'  %}">Terms of Use</a></li>
+                    </ul>
+
+                </div>
+                <br>
+                <br><br>
+                <div class="col-md-12">
+                    <p style="color: black;">We regularly send you alerts while actively monitoring your
+                        property(s).
+
+                    </p>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="row last-row text-center" style="align-items: end; bottom: 0;">
+    <p class="text-center">Copyright © 2022. All rights reserved</p>
+    </div>
+</footer>

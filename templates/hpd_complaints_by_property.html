@@ -1,0 +1,206 @@
+{% extends 'base.html' %} {% load static %}
+
+    {% block title %}HPD Complaints | {% endblock %}
+    {% block canonical %}/hpd-complaints-by-property/{{property.id}}{% endblock %}
+
+
+{% block content %} <style>
+    .for-border {
+        border: none;
+        border-bottom: 2px solid grey;
+    }
+</style>
+<div class="container text-center" style="color: #2b044d;">
+    <br><br>
+    <br><br>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+             {% if messages %}
+          {% for message in messages %}
+            <div class=" alert alert-info">
+                {{ message }}
+            </div>
+          {% endfor %}
+          {% endif %}
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'hpd_complaints' %}"
+                    style="color: #8f1bdc;">HPD Complaints</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{property.house}} {{property.street}} </li>
+        </ol>
+    </nav>
+    <br>
+    <br><br>
+    
+    <h2 style="color: #2b044d;">{{ hpd_complaints.all.count}} HPD Complaints for {{property.street}} {{property.house}}</h2>
+    <hr>
+    <div class="accordion text-center" id="accordionExamplecomplaints"> {% for i in complaints %} 
+        <div class="row text-center mx-auto" style="min-width: 100%;">
+            <div class="card text-center max-auto" style="min-width: 100%;">
+                <div class=" card-header" id="headingTwo{{i.id}}">
+                    <h5 class="mb-0">
+                        <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;"
+                            class="btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo{{i.id}}" aria-expanded="false"
+                            aria-controls="collapseTwo{{i.id}}"> Complaint ID: {{ i.id }}
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo{{i.id}}" class="collapse" aria-labelledby="headingTwo{{i.id}}"
+                    data-parent="#accordionExamplecomplaints">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table style=" color: #8f1bdc;" class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Problem ID</th>
+                                        <th scope="col">Received Date</th>
+                                        <th scope="col">Complaint Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ i.problem_id }}</td>
+                                        <td>{{ i.received_date }}</td>
+                                        <td>{{ i.complaint_status }}</td>
+                                        <!-- <td>{{ i.status }}</td> -->
+                                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#exampleModalLong{{i.id}}1">Details</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" colspan="5">{{ i.complaint_details }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModalLong{{i.id}}1" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 75% !important;" role="document">
+                <div class="modal-content" style="min-width: 35% !important;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>{{i.property.house}} {{i.property.street}}, {{i.property.borough}}</h3>
+                        <hr>
+                        <br>
+                        <div class="row">
+                             <div class="col-md-3">
+                                <strong> Received Date: </strong>{{ i.received_date }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Complaint ID:</strong> {{ i.complaint_id }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Problem ID: </strong> {{ i.problem_id }}
+                            </div>
+                             <div class="col-md-3">
+                                <strong> Unit Type: </strong>{{ i.unit_type }}
+                            </div>
+                           
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong> Building ID:</strong> {{i.building_id}}
+                            </div>
+                            <div class="col-md-4">
+                                <strong> Apartment: </strong>{{i.apartment}}
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Space type:</strong> {{i.space_type}}
+                            </div>
+                        </div>
+                        <hr><br>
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <strong> Major category:</strong> {{i.major_category}}
+                            </div>
+
+                            <div class="col-md-4">
+                                <strong> Minor category:</strong> {{i.minor_category}}
+                            </div>
+
+                             <div class="col-md-4">
+                                <strong> Community Board:</strong> {{i.community_board}}
+                            </div>
+
+                        </div>
+                        <hr>
+                        <br>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <strong> Type:</strong> {{i.type}}
+                            </div>
+
+                            <div class="col-md-4">
+                                <strong> Problem code :</strong> {{i.problem_code}}
+                            </div>
+
+                             <div class="col-md-4">
+                                <strong> Council district:</strong> {{i.council_district}}
+                            </div>
+
+                        </div>
+<hr>
+                        <br>
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <strong> Complaint status:</strong> {{i.complaint_status}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong> Status date :</strong> {{i.complaint_status_date}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong> Problem status:</strong> {{i.problem_status}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong> Problem status date:</strong> {{i.problem_status_date}}
+                            </div>
+
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong> Status description:</strong> {{i.status_description}}
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> {% endfor %}
+    </div>
+    <!-- </div>
+</div>
+</div> -->
+    <br><br>
+    <hr><br><br>
+   
+</div>
+</div>
+<br>
+<br>
+<br><br>
+{% endblock %}

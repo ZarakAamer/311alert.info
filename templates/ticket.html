@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}Create Ticket | {% endblock %}
+    {% block canonical %}/create-ticket{% endblock %}
+
+
+{% block content %}
+
+<style>
+    input {
+        padding: 15px  40px;
+        width: 100%;
+        border: none;
+        border-radius: 30px;
+  box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2); 
+
+  margin: 20px auto;
+
+    }
+
+    textarea {
+  padding: 30px  40px;
+  border: none;
+  background-clip: padding-box; /* Add this line */
+  border-radius: 30px;
+  box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2);
+
+    }
+
+
+    @media (min-width: 768px) and (max-width: 991px) {
+
+
+        input {
+            font-size: medium;
+            padding: 10px  20px;
+            width: 100%;
+            
+        }
+
+    }
+
+    @media (min-width: 300px) and (max-width: 767px) {
+
+        input {
+            font-size: medium;
+            padding: 8px  20px;
+            width: 100%;
+        }
+
+          .purple-line{
+    width: 80%; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+    }
+
+    .purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}.purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}
+</style>
+
+<!-- ================ contact section start ================= -->
+
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <br><br>
+<div class="row d-flex text-center align-items-center justify-content-center" style="max-width: 100%; flex-direction: column; text-align: center; align-items: center;">
+        <div>
+            <p style="color: #8f1bdc;">Support Department</p>
+            <h1 style="font-weight: bold;">Create Ticket</h1>
+            <p>Explain the problem you are facing and we will respond ASAP.<br>Updates will be sent to your registered Email.</p>
+           
+        </div>
+        <div class="purple-line"></div>
+        <br>
+    </div>
+    <form class="form-contact contact_form" action="{% url 'creating' %}" method="post" id="contactForm"
+        novalidate="novalidate">
+{% csrf_token %}
+
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <input name="subject" id="subject" type="text" placeholder="Subject">
+
+            </div>
+            <div class="col-lg-12">
+
+                <textarea style="resize: none; padding: 30px  40px; border: none; border-radius: 30px; box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2);" class=" w-100" name="description" id="message" cols="30" rows="9"
+                    placeholder="Message"></textarea>
+
+            </div>
+
+            <div class="col-lg-12 mt-3 text-center">
+                <button type="submit" class="btn radius-btn">Create Ticket</button>
+            </div>
+               <div class="col-lg-12 mt-3 text-center">
+                <p>To see your previous tickets <a href="{% url 'tickets' %}" style="color: #8f1bdc; text-decoration: underline;">click here</a></p>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="pricing-card-area">
+  
+  <!-- Pricing Card End -->
+  <!-- Available App  Start-->
+   <div class="mobile-apps">
+
+        <div class="container text-center">
+        
+            <div class="row">
+                <div class="col-md-6 " style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+                    
+                    <p style="color: #8f1bdc;">You can download 311alert from app store and google play</p>
+                    
+                    <h3 style="color: black; font-weight: bold;">Download Now</h3>
+                    <div class="purple-line"></div>
+                    
+                </div>
+                <div class="col-md-6" style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: auto;">
+                    <a href="#" class="app-btn1">
+                        <img src="{% static 'assets/img/shape/app_btn1.png' %}" alt="">
+                    </a>
+
+                    <a href="#" class="app-btn2"><img src="{% static 'assets/img/shape/app_btn2.svg' %}" alt=""></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<br><br>
+<!-- ================ contact section end ================= -->
+{% endblock %}

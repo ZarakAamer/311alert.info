@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}Ticket Details | {% endblock %}
+    {% block canonical %}/ticket/id/{{ticket.id}}{% endblock %}
+
+
+{% block content %}
+
+<br>
+<br>
+
+<style>
+    input {
+        padding: 15px  40px;
+        width: 100%;
+        border: none;
+        border-radius: 30px;
+  box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2); 
+
+  margin: 20px auto;
+
+    }
+
+ 
+
+
+    @media (min-width: 768px) and (max-width: 991px) {
+
+
+        input {
+            font-size: medium;
+            padding: 10px  20px;
+            width: 100%;
+            
+        }
+
+    }
+
+    @media (min-width: 300px) and (max-width: 767px) {
+
+        input {
+            font-size: medium;
+            padding: 8px  20px;
+            width: 100%;
+        }
+
+          .purple-line{
+    width: 80%; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+    }
+
+    .purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}.purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}
+</style>
+
+<div style="padding-top: 60px; min-height: 100vh;" class="available-app-area mt-50">
+
+    <div class="container">
+        <div class="row d-flex text-center align-items-center justify-content-center" style="max-width: 100%; flex-direction: column; text-align: center; align-items: center;">
+          <div>
+              <p style="color: #8f1bdc;">Support Department</p>
+              <h1 style="font-weight: bold;">TicketID #{{ ticket.id}}</h1>
+              <p>{{ticket.subject}}</p>
+            
+          </div>
+          <div class="purple-line"></div>
+          <br>
+        </div>
+      
+        
+        <div class="row text-start">
+            <div class="col-md-12">
+                <h3 style="color: #2b044d; font-weight: bold;">Your Problem Statement <br></h3>
+                <p>{{ ticket.description}}</p>
+            </div>
+            <div class="col-md-12">
+                 <h3 style="color: #2b044d; font-weight: bold;">Our Solution for your problem<br></h3>
+                {% if ticket.answer == None %}
+                <p>Pending</p>
+                {%else%}
+                <p>{{ ticket.answer|safe}}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% for ticket in ticket.replies.all %}
+          <div class="row">
+            
+            <div class="col-md-12">
+                <br><br>
+              <h3 style="color: #2b044d; font-weight: bold;">Your Reply<br></h3>
+              <p>{{ ticket.description}}</p>
+            </div>
+            
+            <div class="col-md-12">
+                 <h3 style="color: #2b044d; font-weight: bold;">Our Answer<br></h3>
+                {% if ticket.answer == None %}
+                <p>Pending</p>
+                {%else%}
+                <p>{{ ticket.answer|safe}}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% if ticket.is_ressolved %}
+<div class="container text-center">
+    <button type="button" style="border: 2px solid #8f1bdc; border-radius: 5px; padding: 10px 40px; font-size: medium; color: white; background-color: #8f1bdc;" >Ticket Closed</button>
+</div>
+
+{%else%}
+
+<form action="{% url 'reply_ticket' %}" method="post">        
+    {% csrf_token %}
+    <input type="hidden" name="ticket" value="{{ticket.id}}" >
+    
+</div>
+    <div class="row text-center justify-content-center align-items-center" style="max-width: 100%; margin-top: -200px;">  
+        <div class="col-md-8">
+            <input type="text" name="reply" placeholder="Add Reply" >
+        </div>      
+        <div class="col-md-8" style="display: flex; justify-content: end; align-items: end;">
+            <button style="margin-right: 4px;" type="submit" class="btn radius-btn">Add Reply</button>
+        <a href="{% url 'ticket_ressolved' ticket.id %}" style="background-color: #2b044d;"
+                    class="btn radius-btn">Mark Ressolved</a>
+        </div>
+</div>
+</form>
+<!-- Button trigger modal -->
+
+
+{% endif %}
+
+
+
+{% endblock %}

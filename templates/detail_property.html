@@ -1,0 +1,566 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}{{ pro.house }} {{ pro.street }} | {% endblock %}
+    {% block canonical %}/property-details/{{ pro.id }}{% endblock %}
+
+
+{% block content %}
+
+
+
+<style>
+    .for-border {
+        border: none;
+        border-bottom: 2px solid grey;
+    }
+</style>
+
+
+<div class="container text-center" style="color: #2b044d;" >
+
+    <br><br>
+    <br><br>
+    {% if messages %}
+        {% for message in messages %}
+            <div class=" alert alert-info">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'properties_page' %}"
+                    style="color: #8f1bdc;">Properties</a>
+            </li>
+
+            <li class="breadcrumb-item active" aria-current="page">{{ pro.house }} {{ pro.street }}
+             </li>
+        </ol>
+    </nav>
+    <br>
+    <br><br>
+
+
+
+    <a href="{% url 'edit_property_page' pro.id %}" type="button"
+        style="color: #8f1bdc; padding: 3px 15px; border-radius: 5px; float: right;"><i
+            class="far fa-2x fa-edit"></i></a><a href="{% url 'delete_street_property' pro.id %}" type="button"
+        style="color: #8f1bdc; padding: 3px 15px; border-radius: 5px; float: right;"><i
+            class="far fa-2x fa-trash-alt"></i></a>
+
+
+    
+    <br><br><br>
+            <h3 class="text-center">Property Information</h3>
+    <hr>
+
+
+    <div class="table-responsive">
+        <table style=" color: #8f1bdc;" class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">House Number</th>
+                    <th scope="col">Street Name</th>
+                    <th scope="col">ZIP Code</th>
+                    <th scope="col">Block</th>
+                    <th scope="col">Lot</th>
+                    <th scope="col">BIN</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>{{ pro.house }}</td>
+                    <td>{{ pro.street }}</td>
+                    <td>{{ pro.zip }}</td>
+                    <td>{{ pro.block }}</td>
+                    <td>{{ pro.lott }}</td>
+                    <td>{{ pro.bin_number }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+    <h3 class="text-center">Additional Contacts</h3>
+    <hr>
+
+
+
+    <div class="table-responsive">
+        <table style=" color: #8f1bdc;" class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">  </th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.phone }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+
+
+
+<div class="container text-center">
+<hr>
+    
+
+
+    <div class="card">
+        <div class="card-header" id="headingviolations">
+            <h5 class="mb-0">
+                <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                    type="button" data-toggle="collapse" data-target="#collapseviolations" aria-expanded="false"
+                    aria-controls="collapsecomplaints">
+                    DOB violations                      
+                </a>
+            </h5>
+        </div>
+        <div id="collapseviolations" class="collapse" aria-labelledby="headingviolations" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="row text-center for-border">
+                    <br>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                <th scope="col">Number</th>
+                                <th scope="col">Voilation Number</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Issue Date</th>
+                                <th scope="col">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in violations %}
+                                    <tr>
+                                    <td>{{ i.number }}</td>
+                                    <td>{{ i.violation_number }}</td>
+                                    <td>{{ i.violation_category }}</td>
+                                    <td>{{ i.issue_date }}</td>
+                                    <td>{{ i.violation_type }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <br><br><br>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="card">
+        <div class="card-header" id="headingcomplaints">
+            <h5 class="mb-0">
+                <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                    type="button" data-toggle="collapse" data-target="#collapsecomplaints" aria-expanded="false"
+                    aria-controls="collapsecomplaints">
+                    DOB Complaints                      
+                </a>
+            </h5>
+        </div>
+        <div id="collapsecomplaints" class="collapse" aria-labelledby="headingcomplaints" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="row text-center for-border">
+                    <br>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Number</th>
+                                    <th scope="col">Date Entered</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Inspection Date</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            {% for comp in complaints %}
+                                <tr>
+                                <td>{{comp.complaint_number }}</td>
+                                <td>{{ comp.date_entered }}</td>
+                                <td>{{ comp.complaint_category }}</td>
+                                <td>{{ comp.inspection_date }}</td>
+                                <td>{{ comp.status }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                        </table>
+                    </div>
+                    
+                    <br><br><br>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="card">
+        <div class="card-header" id="headinghpdcomplaints">
+            <h5 class="mb-0">
+                <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                    type="button" data-toggle="collapse" data-target="#collapsehpdcomplaints" aria-expanded="false"
+                    aria-controls="collapsehpdcomplaints">
+                    HPD Complaints                      
+                </a>
+            </h5>
+        </div>
+        <div id="collapsehpdcomplaints" class="collapse" aria-labelledby="headinghpdcomplaints" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="row text-center for-border">
+                    <br>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Complaint ID</th>
+                                    <th scope="col">Received Date</th>
+                                    <th scope="col">Complaint Status</th>
+                                    <th scope="col">Status Date</th>
+                                    <th scope="col">Problem ID</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            {% for comp in hpd_complaints %}
+                                <tr>
+                                <td>{{comp.complaint_id }}</td>
+                                <td>{{ comp.received_date }}</td>
+                                <td>{{ comp.complaint_status }}</td>
+                                <td>{{ comp.complaint_status_date }}</td>
+                                <td>{{ comp.problem_id }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                        </table>
+                    </div>
+                    
+                    <br><br><br>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="card">
+        <div class="card-header" id="headinghpdviolations">
+            <h5 class="mb-0">
+                <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                    type="button" data-toggle="collapse" data-target="#collapsehpdviolations" aria-expanded="false"
+                    aria-controls="collapsehpdviolations">
+                    HPD Violations                      
+                </a>
+            </h5>
+        </div>
+        <div id="collapsehpdviolations" class="collapse" aria-labelledby="headinghpdviolations" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="row text-center for-border">
+                    <br>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Violation ID</th>
+                                    <th scope="col">Registration ID</th>
+                                    <th scope="col">Violation Status</th>
+                                    <th scope="col">Violation Class</th>
+                                    <th scope="col">Inspection Date</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            {% for violation in hpd_violations %}
+                                <tr>
+                                <td>{{violation.violationid }}</td>
+                                <td>{{ violation.registrationid }}</td>
+                                <td>{{ violation.violationstatus }}</td>
+                                <td>{{ violation.violations_class }}</td>
+                                <td>{{ violation.inspectiondate }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                        </table>
+                    </div>
+                    
+                    <br><br><br>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="card">
+        <div class="card-header" id="headinghpdcharges">
+            <h5 class="mb-0">
+                <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                    type="button" data-toggle="collapse" data-target="#collapsehpdcharges" aria-expanded="false"
+                    aria-controls="collapsehpdcharges">
+                    HPD Charges                      
+                </a>
+            </h5>
+        </div>
+        <div id="collapsehpdcharges" class="collapse" aria-labelledby="headinghpdcharges" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="row text-center for-border">
+                    <br>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fee ID</th>
+                                    <th scope="col">building ID</th>
+                                    <th scope="col">Fee Type</th>
+                                    <th scope="col">Fee Issued Date</th>
+                                    <th scope="col">Fee Amount</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            {% for fee in hpd_charges %}
+                                <tr>
+                                <td>{{ fee.feeid }}</td>
+                                <td>{{ fee.buildingid }}</td>
+                                <td>{{ fee.feetype }}</td>
+                                <td>{{ fee.feeissueddate }}</td>
+                                <td>{{ fee.feeamount }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                        </table>
+                    </div>
+                    
+                    <br><br><br>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    
+
+    <div class="card">
+        <div class="card-header" id="headinghpdlitigations">
+            <h5 class="mb-0">
+                <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                    type="button" data-toggle="collapse" data-target="#collapsehpdlitigations" aria-expanded="false"
+                    aria-controls="collapsehpdlitigations">
+                    HPD Litigations                      
+                </a>
+            </h5>
+        </div>
+        <div id="collapsehpdlitigations" class="collapse" aria-labelledby="headinghpdlitigations" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="row text-center for-border">
+                    <br>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Litigation ID</th>
+                                    <th scope="col">Building ID</th>
+                                    <th scope="col">Case Type</th>
+                                    <th scope="col">Case Status</th>
+                                    <th scope="col">Case Open Date</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            {% for litigation in hpd_litigations %}
+                                <tr>
+                                <td>{{ litigation.litigationid }}</td>
+                                <td>{{ litigation.buildingid }}</td>
+                                <td>{{ litigation.casetype }}</td>
+                                <td>{{ litigation.casestatus }}</td>
+                                <td>{{ litigation.caseopendate }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                        </table>
+                    </div>
+                    
+                    <br><br><br>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="card">
+        <div class="card-header" id="headinghpdrepais">
+            <h5 class="mb-0">
+                <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                    type="button" data-toggle="collapse" data-target="#collapsehpdrepais" aria-expanded="false"
+                    aria-controls="collapsehpdrepais">
+                    HPD Repair/Vacate Orders                      
+                </a>
+            </h5>
+        </div>
+        <div id="collapsehpdrepais" class="collapse" aria-labelledby="headinghpdrepais" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="row text-center for-border">
+                    <br>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Registration ID</th>
+                                    <th scope="col">Building ID</th>
+                                    <th scope="col">Vacate Order Number</th>
+                                    <th scope="col">Vacate Type</th>
+                                    <th scope="col">Vacate Effective Date</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            {% for repair in hpd_repairs %}
+                                <tr>
+                                <td>{{ repair.registration_id }}</td>
+                                <td>{{ repair.building_id }}</td>
+                                <td>{{ repair.vacate_order_number }}</td>
+                                <td>{{ repair.vacate_type }}</td>
+                                <td>{{ repair.vacate_effective_date }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                        </table>
+                    </div>
+                    
+                    <br><br><br>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="card">
+        <div class="card-header" id="headinghpdbedbugs">
+            <h5 class="mb-0">
+                <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                    type="button" data-toggle="collapse" data-target="#collapsehpdbedbugs" aria-expanded="false"
+                    aria-controls="collapsehpdbedbugs">
+                    HPD BedBug Reports                  
+                </a>
+            </h5>
+        </div>
+        <div id="collapsehpdbedbugs" class="collapse" aria-labelledby="headinghpdbedbugs" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="row text-center for-border">
+                    <br>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Registration ID</th>
+                                    <th scope="col">Building ID</th>
+                                    <th scope="col">Of Dwelling Units</th>
+                                    <th scope="col">Infested Dwelling Unit Countcate</th>
+                                    <th scope="col">Filing Date</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            {% for bedbug in hpd_bedbugs %}
+                                <tr>
+                                <td>{{ bedbug.registration_id }}</td>
+                                <td>{{ bedbug.building_id }}</td>
+                                <td>{{ bedbug.of_dwelling_units }}</td>
+                                <td>{{ bedbug.infested_dwelling_unit_count }}</td>
+                                <td>{{ bedbug.filing_date }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                        </table>
+                    </div>
+                    
+                    <br><br><br>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<br>
+<br>
+<br><br>
+{% endblock %}

@@ -1,0 +1,75 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>{% block title %}{% endblock %}311 Alert Info</title>
+    <link rel="canonical" href="https://www.311alert.info{% block canonical %}{% endblock %}">
+    
+    <meta name="description" content="We proudly offer both HPD and 311 Realtime alerts as integral parts of our services. These alerts ensure immediate notifications, keeping you informed about the latest updates in real-time. Our website, designed for ease of use and seamless navigation, facilitates efficient access to these critical alerts. By offering both HPD and 311 Realtime alerts, our goal is to remove the hassle of monitoring 311 complaints and violations, enabling you to manage your property with greater ease and effectiveness.">
+    <meta name="keywords" content="Real Estate Professionals, Property Owners, 311 Complaints, Violations, Five Boroughs, New York City, Real-Time Alerts, HPD Alerts, HPD Realtime Alerts, 311 Realtime Alerts, Accurate Information, Timely Information, Property Management, User-Friendly Website, Easy Navigation, Compliance, Property Regulations, Instant Notifications, Efficient Property Management, Monitoring Services">
+
+
+
+
+
+
+    <meta name="facebook-domain-verification" content="dc6uxyk3rlsglgtoakrdtos01nlgya" />
+    <script src="https://unpkg.com/htmx.org@1.5.0"
+        integrity="sha384-oGA+prIp5Vchu6we2YkI51UtVzN9Jpx2Z7PnR1I78PnZlN8LkrCT4lqqqmDkyrvI"
+        crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+
+<body>
+
+    <style>
+        input{
+            -webkit-appearance: none;
+        }
+    </style>
+  
+    {% include 'nav.html' %}
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+
+    </main>
+
+    {% include 'foot.html' %}
+
+
+    <script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        })
+
+
+
+
+    </script>
+</body></html>

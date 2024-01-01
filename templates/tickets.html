@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}My Tickets | {% endblock %}
+    {% block canonical %}/my-tickets{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+
+    .for-border {
+        border: none;
+        border-bottom: 2px solid grey;
+    }
+
+.purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}
+
+
+
+
+
+  @media(max-width:767px){
+   
+    .purple-line{
+    width: 80%; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+}
+
+.ticket{
+    /* border: 2px solid #2b044d; */
+    border-radius: 30px;
+    padding: 10px 20px;
+  box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2); 
+
+}
+
+</style>
+
+
+
+
+<div class="container text-center" style="color: #2b044d;">
+
+    <br><br>
+    <br><br>
+
+
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+
+
+            <li class="breadcrumb-item active" aria-current="page">My Tickets</li>
+        </ol>
+    </nav>
+    <br>
+    <br><br>
+
+
+    <div class="row d-flex text-center align-items-center justify-content-center" style="max-width: 100%; flex-direction: column; text-align: center; align-items: center;">
+        <div>
+            <p style="color: #8f1bdc;">Support Department</p>
+            <h1 style="font-weight: bold;">My Tickets</h1>
+           
+        </div>
+        <div class="purple-line"></div>
+        <br>
+    </div>
+
+    
+{% for i in tickets %}
+                <ul style="text-align: left;">
+                    <li class="ticket"><span style="margin-right: 10px;"><a href="{% url 'ticket_details' i.id %}" style="color: #2b044d; font-weight: bold;">  Ticket ID = {{ i.id }}</a></span>
+                    <span><a href="{% url 'ticket_details' i.id %}" style="color: grey;">{{ i.subject }}</a> </span>
+                    {% if i.is_ressolved == True %}
+                   <span style="padding: 2px 12px; border-radius: 30px; color: white;font-weight: bold; background-color: #8f1bdc; float: right; margin-top: auto; margin-bottom: auto; margin-right: 0% !important;"><a href="{% url 'ticket_details' i.id %}"> RESSOLVED</a></span></li>
+                   {% else %}
+                   <span style="padding: 2px 12px; border-radius: 30px; color: white;font-weight: bold; background-color: #2b044d; float: right; margin-top: auto; margin-bottom: auto; margin-right: 0% !important;"><a href="{% url 'ticket_details' i.id %}"> Active</a></span></li>
+                    {% endif %}
+                </ul>
+                <br>
+
+                {% endfor %}
+
+          
+
+</div>
+<br>
+<br>
+
+   <div class="mobile-apps">
+
+        <div class="container text-center">
+        
+            <div class="row">
+                <div class="col-md-6 " style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+                    
+                    <p style="color: #8f1bdc;">You can download 311alert from app store and google play</p>
+                    
+                    <h3 style="color: black; font-weight: bold;">Download Now</h3>
+                    <div class="purple-line"></div>
+                    
+                </div>
+                <div class="col-md-6" style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: auto;">
+                    <a href="#" class="app-btn1">
+                        <img src="{% static 'assets/img/shape/app_btn1.png' %}" alt="">
+                    </a>
+
+                    <a href="#" class="app-btn2"><img src="{% static 'assets/img/shape/app_btn2.svg' %}" alt=""></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<br><br>
+{% endblock %}
+
+
+

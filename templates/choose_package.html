@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+ <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<br>
+<br>
+
+<style>
+
+
+.purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}
+
+  @media(max-width:767px){
+   
+    .purple-line{
+    width: 80%; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+}
+
+label{
+    display: none;
+    
+}
+
+.form-item{
+    text-align: center; 
+    align-items: center;
+    display: flex; 
+    justify-content: center; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+.nice-select{
+    min-width: 100%;
+border-radius: 30px;
+height: 50px;
+padding-top: 5px;
+}
+.nice-select > .list{
+    width: 100%;
+}
+
+.nice-select > .current{
+    color: grey;
+     font-size: 20px;
+}
+
+</style>
+<!-- 03149148321 -->
+
+<div style="padding-top: 60px; height: 75vh;" class="available-app-area mt-50">
+   
+
+    <div class="container text-center">
+
+
+        <div class="row d-flex justify-content-center" >
+             {% if messages %}
+          {% for message in messages %}
+            <div class=" alert alert-info">
+                {{ message }}
+            </div>
+          {% endfor %}
+          {% endif %}
+                
+            <div class="col-md-12">
+                <p style="color: #8f1bdc;">Choose Subcription </p>
+
+            </div>
+            <div class="col-md-12">
+                    <h1 style="font-weight: bold;">Almost There!</h1>
+
+            </div>
+                <div class="purple-line"></div>
+            <div class="col-md-12">
+                <br>
+                    <p>Add your Card and Select one of the subscription plans.</p>
+
+            </div>
+        </div>
+
+
+	
+        <br>
+        <br><br>
+
+
+        <form action="{% url 'payment_at_registration' %}" method="post" id="payment-form">
+            {% csrf_token %}
+            <div class="row text-center align-items-center justify-content-center" >
+                <div class="col-md-6 stripe-item" style=" padding: 10px; box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2); border-radius: 30px; height: 50px;">
+                    <div id="card-element">
+                        <!-- A Stripe Element will be inserted here. -->
+                    </div>
+
+                <!-- Used to display form errors. -->
+                    <div id="card-errors" role="alert"></div>
+                </div>
+            </div>
+
+   
+            <div class="row text-center align-items-center justify-content-center">
+                <div class="col-md-6" style=" box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2); border-radius: 30px; width: 100%; padding: 0px; margin-top: 20px; ">
+                    <select name="account_type">
+                        <option style="color: grey; font-size: 20px;" selected>Select Account Type</option>
+                        {% for price in prices %}
+                        <option value="{{price.first_month_token}}">${{price.price_per_month}} <sub>/month</sub></option>
+                        {% endfor %}
+
+                        {% for price in prices %}
+                        <option value="{{price.yearly_token}}">${{price.price_per_year}} <sub>/year</sub></option>
+                        {% endfor %}
+                    
+                        <option value="20">20+ Properties (Contact Us)</option>
+                    </select>
+
+                </div>
+            </div>
+            <br>
+            <br>
+                   
+            
+            <div class="row text-center align-items-center justify-content-center form-item">
+                <div class="col-md-12 form-item">
+                    
+                    {{captcha}}
+                    
+                </div>     
+            </div>
+            <br>
+            
+                <input name="user_id" type="hidden" value="{{ user_id }}">
+                <button class="btn radius-btn" type="submit">Submit</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe('{{stripekeypublick}}');
+    var elements = stripe.elements();
+
+    var style = {
+       
+           base: {
+            color: 'black',
+            fontSize: '20px',
+            padding:'100px',
+            // backgroundColor:'crimson',
+            '::placeholder': {
+                color: 'grey',
+                padding: '20px',
+            },
+           
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
+    };
+
+    var card = elements.create('card', {style: style});
+    card.mount('#card-element');
+
+    card.on('change', function(event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+                stripeTokenHandler(result.token);
+            }
+        });
+    });
+
+    function stripeTokenHandler(token) {
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+        form.submit();
+    }
+</script>
+
+{% endblock %}

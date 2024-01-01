@@ -1,0 +1,285 @@
+{% extends 'base.html' %} {% load static %} 
+
+    {% block title %}Register At | {% endblock %}
+    {% block canonical %}/register-attempt{% endblock %}
+
+
+{% block content %}
+<br />
+<br />
+<br /><br /><br />
+<br />
+
+
+
+
+<style>
+
+
+
+input {
+  min-width: 80%;
+  border-radius: 30px;
+ border-bottom: none;
+  box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2); 
+  /* text-align: center; */
+  padding: 10px;
+  padding-left: 20px;
+}
+.purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}
+
+.pricing-icon-container{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='90' viewBox='0 0 100 90'%3E%3Cpath id='bg-01' d='M235.182,2881.254c-13.609,27.03,37.419,54.228,74.2,41.818,51.873-17.5,6.863-111.753-28-80.669C255.595,2865.4,247.333,2857.119,235.182,2881.254Z' transform='translate(-232.93 -2836.163)' fill='%238f1bdc'/%3E%3C/svg%3E%0A");
+    background-size: cover;
+    height: 90px;
+    width: 100px;
+    margin: 30px;
+}
+
+
+
+
+  @media(max-width:767px){
+   
+    .purple-line{
+    width: 80%; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.form-row{
+    min-width: 100%;
+    margin: auto;
+    padding: 20px;
+}
+
+
+
+input {
+  min-width: 100%;
+  border-radius: 30px;
+ border-bottom: none;
+  box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2); 
+  /* text-align: center; */
+  padding: 10px;
+  padding-left: 20px;
+margin: auto;
+}
+
+
+}
+
+
+
+
+.form-row{
+    max-width: 60%;
+    margin: auto;
+    padding: 30px;
+}
+.form-row div{
+    margin: 10px auto;
+}
+
+ 
+
+</style>
+
+
+<section class="white-bg text-center align-items-center" style="margin-top: 10px; margin-bottom: 200px; padding: 0 15px;">
+    
+    
+    
+     <div class="row d-flex justify-content-center" >
+        
+      <div class="col-md-12">
+            <p style="color: #8f1bdc; text-align: center;">Create an Account</p>
+            </div>
+      <div class="col-md-12">
+            <h1 style="font-weight: bold;">Personal Information</h1>
+        </div>
+        <div class="purple-line"></div>
+      <div class="col-md-12">
+<br>
+        <p>To get started please fill out the form below.</p>
+      </div>
+    </div>
+    
+ 
+    <div class="row align-items-center justify-content-center">
+        
+        
+
+       
+
+        <form  action="{% url 'register' %}" method="post">
+         
+            {% csrf_token %}
+                <div class="form-row row">
+                    <div class="col-md-5">
+                        <input  name="fname" placeholder="First Name..." required>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <input  name="lname" placeholder="Last Name...">
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <input name="cname" placeholder="Company Name..." >
+                    </div>
+                   
+                    <div class="col-md-5">
+                        <input  name="address_first" placeholder="Address Line 1..." required>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <input name="address_second" placeholder="Address Line 2..." >
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <input  name="city" placeholder="City..."  required>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <input  name="state" placeholder="State..."  required>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <input  name="zip" placeholder="Zip..."  required>
+                    </div>                        
+                
+
+                    <div class="col-md-5">
+                      <input type="number"  name="phone"
+                                placeholder="Cell..." required>
+                    </div>
+                    
+                    <div class="col-md-5">
+                       <input name="cell" type="number" placeholder="Business Phone Number...">
+                    </div>
+                    <div class="col-md-12">
+                        <br>
+                        <input type="text" name="our_source" placeholder="Where did you here about us..." >
+                    </div>
+                </div>
+            
+
+
+     <div class="row d-flex justify-content-center" >
+        
+      <div class="col-md-12">
+            <h1 style="font-weight: bold;">Login Information</h1>
+        </div>
+        <div class="purple-line"></div>
+     </div>
+    
+    <div class="row form-row  align-items-center justify-content-center">
+        <div style="min-width: 100%;">
+            <input  type="email" name="email" placeholder="Email..." required>
+        </div>   
+    </div>
+       
+    <div class="row form-row " style="margin-top: -20px;">
+        <div class="col-md-5">
+            <input  type="password" name="password" placeholder="Password" required>
+        </div>
+        
+        <div class="col-md-5">
+            <input  type="password" name="cpassword" placeholder="Confirm Password" required>
+        </div>
+    
+    
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="col-md-12">
+       
+            <button style="min-width: 40%;" type="submit" class="btn radius-btn"> Sign Up</button>
+    
+        </div>
+    </div>
+        
+
+
+         
+        </form>
+
+
+
+            
+    </div>
+</section>
+
+<div class="pricing-card-area">
+  
+  <!-- Pricing Card End -->
+  <!-- Available App  Start-->
+   <div class="mobile-apps">
+
+        <div class="container text-center">
+        
+            <div class="row">
+                <div class="col-md-6 " style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+                    
+                    <p style="color: #8f1bdc;">You can download 311alert from app store and google play</p>
+                    
+                    <h3 style="color: black; font-weight: bold;">Download Now</h3>
+                    <div class="purple-line"></div>
+                    
+                </div>
+                <div class="col-md-6" style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: auto;">
+                    <a href="#" class="app-btn1">
+                        <img src="{% static 'assets/img/shape/app_btn1.png' %}" alt="">
+                    </a>
+
+                    <a href="#" class="app-btn2"><img src="{% static 'assets/img/shape/app_btn2.svg' %}" alt=""></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+  <!-- <div id="display" class="row text-center"></div> -->
+  <!-- Available App End-->
+
+  <!-- Say Something Start -->
+  <div class="say-something-aera pt-90 pb-90 fix">
+    <div class="container">
+      <div class="row justify-content-between align-items-center">
+        <div class="offset-xl-1 offset-lg-1 col-xl-5 col-lg-5">
+          <div class="say-something-cap">
+            <h2>Say Hello To The Collaboration Hub.</h2>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3">
+          <div class="say-btn">
+            <a href="{% url 'contact' %}" class="btn radius-btn">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- shape -->
+    <div class="say-shape">
+      <img
+        src="{% static 'assets/img/shape/say-shape-left.png' %}"
+        alt=""
+        class="say-shape1 rotateme d-none d-xl-block"
+      />
+      <img
+        src="{% static 'assets/img/shape/say-shape-right.pn' %}"
+        alt=""
+        class="say-shape2 d-none d-lg-block"
+      />
+    </div>
+  </div>
+
+
+{% endblock %}

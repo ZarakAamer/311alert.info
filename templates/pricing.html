@@ -1,0 +1,229 @@
+{% extends 'base.html' %} {% load static %} 
+
+
+
+    {% block title %}Pricing | {% endblock %}
+    {% block canonical %}/pricing{% endblock %}
+
+
+
+{% block content %}
+<br />
+<br />
+<br /><br /><br />
+<br />
+
+
+
+
+<style>
+
+
+
+
+
+.purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}
+
+.pricing-icon-container{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='90' viewBox='0 0 100 90'%3E%3Cpath id='bg-01' d='M235.182,2881.254c-13.609,27.03,37.419,54.228,74.2,41.818,51.873-17.5,6.863-111.753-28-80.669C255.595,2865.4,247.333,2857.119,235.182,2881.254Z' transform='translate(-232.93 -2836.163)' fill='%238f1bdc'/%3E%3C/svg%3E%0A");
+    background-size: cover;
+    height: 90px;
+    width: 100px;
+    margin: 30px;
+}
+
+
+
+
+  @media(max-width:767px){
+   
+    .purple-line{
+    width: 80%; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+}
+
+
+
+
+
+ 
+
+</style>
+
+
+<section class="white-bg text-center align-items-center" style="margin-top: 10px; margin-bottom: 200px; padding: 0 15px;">
+    <div class="row d-flex text-center align-items-center justify-content-center" style="flex-direction: column; text-align: center; align-items: center;">
+        <div>
+            <p style="color: #8f1bdc;">Choose One of</p>
+            <h1 style="font-weight: bold;">Our Best Pricing Plans</h1>
+            <br>
+            <p>Try one of the following prices but do not worry you can always upgrade your plan and <br> add more properties we offer the most reasonable price in the market.</p>
+        </div>
+        <div class="purple-line"></div>
+        <br><br>
+    </div>
+
+
+      {% for i in prices %}
+
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-3 d-flex align-items-center" style="flex-direction: column; justify-content: center; box-shadow: 1px 0px 3px 0px grey; border-radius: 30px; background-color: #FAF8FC; margin: 15px;">
+             <div class="pricing-icon-container d-flex align-items-center justify-content-center ">
+                <img src="{% static 'assets/crown.png' %}" alt="">
+            </div>
+            <div>
+                <h3>
+                    Basic Monthly Plan
+                </h3>
+                <br>
+                <h3 style="color: black; font-weight: bold;">
+                    $8.00 <sub>/month</sub>
+                </h3>
+                <br>       
+                <h5 style="color: #8f1bdc; font-weight: bold;">1 Month Free Trial</h5>
+                
+                     <br>
+                <p>Property: 1</p>            <p>Email Support: yes</p>            <p>Whatsapp Support: yes</p>
+                <br>                        <br>            <br>
+                             <form action="{% url 'pro' %}" method="POST">
+
+                  {% if profiled %}
+                  
+                    <a href="{% url 'update_subscription' %}" class="btn radius-btn" style="width: 100%;">Upgrade Plan</a>
+                  
+                  
+                  {% else %}
+                    {% csrf_token %}
+                    <input type="hidden" name="account_type" value="{{i.first_month_token}}">
+                    
+                    <button type="submit" class="btn radius-btn" style="width: 100%;">Get Started</button>
+                  {% endif %}
+
+
+                </form>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="col-md-3 d-flex align-items-center" style="flex-direction: column; justify-content: center; box-shadow: 1px 0px 3px 0px grey; border-radius: 30px; background-color: #FAF8FC; margin: 15px;">
+             <div class="pricing-icon-container d-flex align-items-center justify-content-center ">
+                <img src="{% static 'assets/crown.png' %}" alt="">
+            </div>
+            <div>
+                <h3>
+                    Basic Yearly Plan
+                </h3>
+                <br>
+                <h3 style="color: black; font-weight: bold;">
+                    $72.00 <sub>/year</sub><sup style="color: white; background-color: #8f1bdc; border-radius: 20px; padding:1px 10px;">save 25%</sup>
+                </h3>
+                <br>      
+                <h5 style="color: #8f1bdc; font-weight: bold;">1 Month Free Trial</h5>
+                
+                      <br>
+                <p>Property: 1</p>            <p>Email Support: yes</p>            <p>Whatsapp Support: yes</p>
+                <br>                        <br>            <br>
+                             <form action="{% url 'pro' %}" method="POST">
+
+                  {% if profiled %}
+                  
+                  <a href="{% url 'update_subscription' %}" class="btn radius-btn" style="width: 100%;">Upgrade Plan</a>
+                  
+                  
+                  {% else %}
+{% csrf_token %}
+                  
+                  <input type="hidden" name="account_type" value="{{i.first_year_token}}">
+                  
+                  <button type="submit" class="btn radius-btn" style="width: 100%;">Get Started</button>
+{% endif %}
+
+
+                </form>
+                <br><br>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+<div class="pricing-card-area">
+  
+  <!-- Pricing Card End -->
+  <!-- Available App  Start-->
+   <div class="mobile-apps">
+
+        <div class="container text-center">
+        
+            <div class="row">
+                <div class="col-md-6 " style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+                    
+                    <p style="color: #8f1bdc;">You can download 311alert from app store and google play</p>
+                    
+                    <h3 style="color: black; font-weight: bold;">Download Now</h3>
+                    <div class="purple-line"></div>
+                    
+                </div>
+                <div class="col-md-6" style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: auto;">
+                    <a href="#" class="app-btn1">
+                        <img src="{% static 'assets/img/shape/app_btn1.png' %}" alt="">
+                    </a>
+
+                    <a href="#" class="app-btn2"><img src="{% static 'assets/img/shape/app_btn2.svg' %}" alt=""></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+  <div id="display" class="row text-center"></div>
+  <!-- Available App End-->
+
+  <!-- Say Something Start -->
+  <div class="say-something-aera pt-90 pb-90 fix">
+    <div class="container">
+      <div class="row justify-content-between align-items-center">
+        <div class="offset-xl-1 offset-lg-1 col-xl-5 col-lg-5">
+          <div class="say-something-cap">
+            <h2>Say Hello To The Collaboration Hub.</h2>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3">
+          <div class="say-btn">
+            <a href="{% url 'contact' %}" class="btn radius-btn">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- shape -->
+    <div class="say-shape">
+      <img
+        src="{% static 'assets/img/shape/say-shape-left.png' %}"
+        alt=""
+        class="say-shape1 rotateme d-none d-xl-block"
+      />
+      <img
+        src="{% static 'assets/img/shape/say-shape-right.pn' %}"
+        alt=""
+        class="say-shape2 d-none d-lg-block"
+      />
+    </div>
+  </div>
+
+
+  {% endblock %}
+
+
+
+
+
+           

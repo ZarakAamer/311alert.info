@@ -1,0 +1,229 @@
+{% extends 'base.html' %} {% load static %}
+
+
+    {% block title %}HPD Violations | {% endblock %}
+    {% block canonical %}/hpd-violations-by-property/{{ property.id }}{% endblock %}
+
+
+{% block content %} <style>
+    .for-border {
+        border: none;
+        border-bottom: 2px solid grey;
+    }
+</style>
+<div class="container text-center" style="color: #2b044d;">
+    <br><br>
+    <br><br>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+             {% if messages %}
+          {% for message in messages %}
+            <div class=" alert alert-info">
+                {{ message }}
+            </div>
+          {% endfor %}
+          {% endif %}
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'hpd_violations' %}"
+                    style="color: #8f1bdc;">HPD Violations</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{property.house}} {{property.street}} </li>
+        </ol>
+    </nav>
+    <br>
+    <br><br>
+    
+    <h2 style="color: #2b044d;">{{ property.hpd_violations.all.count}} HPD Violations for {{property.street}} {{property.house}}</h2>
+    <hr>
+    <div class="accordion text-center" id="accordionExamplecomplaints"> {% for i in violations %} 
+        <div class="row text-center mx-auto" style="min-width: 100%;">
+            <div class="card text-center max-auto" style="min-width: 100%;">
+                <div class=" card-header" id="headingTwo{{i.id}}">
+                    <h5 class="mb-0">
+                        <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;"
+                            class="btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo{{i.id}}" aria-expanded="false"
+                            aria-controls="collapseTwo{{i.id}}"> Violations ID: {{ i.violationid }}
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo{{i.id}}" class="collapse" aria-labelledby="headingTwo{{i.id}}"
+                    data-parent="#accordionExamplecomplaints">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table style=" color: #8f1bdc;" class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Violation Status</th>
+                                        <th scope="col">Class</th>
+                                        <th scope="col">Inspection Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ i.violationstatus }}</td>
+                                        <td>{{ i.violations_class }}</td>
+                                        <td>{{ i.inspectiondate }}</td>
+                                        <!-- <td>{{ i.status }}</td> -->
+                                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#exampleModalLong{{i.id}}1">Details</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" colspan="5">{{ i.novdescription }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModalLong{{i.id}}1" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 75% !important;" role="document">
+                <div class="modal-content" style="min-width: 35% !important;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>{{i.property.house}} {{i.property.street}}, {{i.property.borough}}</h3>
+                        <hr>
+                        <br>
+                        <div class="row">
+                             <div class="col-md-3">
+                                <strong> Violation ID: </strong>{{ i.violationid }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Building ID:</strong> {{ i.buildingid }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Registration ID: </strong> {{ i.registrationid }}
+                            </div>
+                             <div class="col-md-3">
+                                <strong> Story: </strong>{{ i.story }}
+                            </div>
+                           
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong> Violations Class:</strong> {{i.violations_class}}
+                            </div>
+                            <div class="col-md-4">
+                                <strong> Inspection Date: </strong>{{i.inspectiondate}}
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Approved Date:</strong> {{i.approveddate}}
+                            </div>
+
+                        </div>
+                        <hr><br>
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <strong> Original Certify By Date:</strong> {{i.originalcertifybydate}}
+                            </div>
+
+                            <div class="col-md-4">
+                                <strong>Original Correct By Date:</strong> {{i.originalcorrectbydate }}
+                            </div>
+
+                             <div class="col-md-4">
+                                <strong> Order Number:</strong> {{i.ordernumber }}
+                            </div>
+
+                        </div>
+                        <hr>
+                        <br>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <strong> Nov ID:</strong> {{i.novid}}
+                            </div>
+
+                            <div class="col-md-4">
+                                <strong> Nov Issued Date :</strong> {{i.novissueddate}}
+                            </div>
+
+                             <div class="col-md-4">
+                                <strong> Nov Type:</strong> {{i.novtype}}
+                            </div>
+
+                        </div>
+<hr>
+                        <br>
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <strong> Current Status ID:</strong> {{i.currentstatusid}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong> Current Status:</strong> {{i.currentstatus}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong> Current Status Date:</strong> {{i.currentstatusdate}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>Violation Status:</strong> {{i.violationstatus}}
+                            </div>
+
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <strong> Rent Impairing:</strong> {{i.rentimpairing}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong> Community Board:</strong> {{i.communityboard}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong> Council District:</strong> {{i.councildistrict}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>Census Tract:</strong> {{i.censustract}}
+                            </div>
+
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong> NTA:</strong> {{i.nta}}
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> {% endfor %}
+    </div>
+    <!-- </div>
+</div>
+</div> -->
+    <br><br>
+    <hr><br><br>
+   
+</div>
+</div>
+<br>
+<br>
+<br><br>
+{% endblock %}

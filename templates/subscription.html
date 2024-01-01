@@ -1,0 +1,305 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<br>
+<br>
+<style>
+  .image-input {
+    background-image: url("{% static 'assets/profile.png' %}");
+  }
+  .text-primary{
+    color: #2b044d !important;
+  }
+
+
+
+.btn{
+background-color: #8f1bdc !important;
+margin: 5px;
+}
+  .progress-bar{
+    background-color: #8f1bdc;
+    color: #8f1bdc;
+  }
+
+
+  .payment-details {
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.payment-details h3 {
+    margin-bottom: 10px;
+}
+
+.payment-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.payment-details li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.card-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.card-info {
+    flex: 1;
+}
+
+.edit-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+</style>
+<section >
+  <div class="container py-5">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+
+
+            <li class="breadcrumb-item active" aria-current="page">Profile</li>
+        </ol>
+    </nav>
+    {% if messages %}
+        {% for message in messages %}
+        <div class=" alert alert-info">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+
+
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">Subscription</span> Details
+                </p>
+                <br>
+
+                <p>Started at:<span class="text-primary font-italic me-1"> {{created}}</span></p>
+<br>
+<br>
+                <p>Current period started: <span class="text-primary font-italic me-1">{{current_start}}</span></p>
+                <p>Current period ended: <span class="text-primary font-italic me-1">{{current_end}}</span></p>
+                
+                
+                <!-- <p >Price: <span class="text-primary font-italic me-1"> ${{price}}</span></p> -->
+
+
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{ number_of_days }} days remaining in this period</p>
+                <div class="progress rounded" style="height: 10px;">
+                    <div class="progress-bar" role="progressbar" style="width: {{life}}%" aria-valuenow="{{life}}"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-5">
+            <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Payment</span> Method
+                    </p>
+
+                    <div class="payment-details">
+                        <ul>
+                            <li>
+                                <span class="card-icon"><i class="fas fa-credit-card"></i></span>
+                                <span class="card-info">  **** **** **** {{card.last4}}</span>
+                            </li>
+                            <li>
+
+                                Expiration:&emsp;<span class="card-info">{{ card.exp_month }}-{{ card.exp_year }}</span>
+                            </li>
+                         
+                            <li>
+
+                                Type:&emsp;<span class="card-info">{{ card.brand }}</span>
+                            </li>
+                            <br>
+
+                            <p>Want to update your card?    <button type="button" data-toggle="modal" data-target="#myModal" style="background: transparent; border: none; color: #8f1bdc;">click here</button></p>
+                            <p>Want to cancel your subscription?    <a href="{% url 'cancel_subscription' %}" style="background: transparent; border: none; color: #8f1bdc;">click here</a></p>
+
+                      
+                            <!-- Repeat for each payment method -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <form action="{% url 'change_card' %}" method="post" id="payment-form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Your Card</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="col-md-12 stripe-item" style="padding: 10px; box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.2); border-radius: 30px; height: 50px; width: 100%;">
+                        <div id="card-element">
+                            <!-- A Stripe Element will be inserted here. -->
+                        </div>
+
+                    <!-- Used to display form errors. -->
+                        <div id="card-errors" role="alert"></div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="cid" value="{{ profile.strip_costumer_token }}">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+        <div class="col-lg-12 mt-4">
+            <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Your</span> Invoices
+                    </p>
+
+                    <div class="table-responsive">
+                        <table style=" color: #8f1bdc;" class="table table-borderless">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Created At</th>
+                                    <th scope="col">Billing Reason</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Amount Paid</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Invoice PDF</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for invoice in invoices %}
+                        
+                                <td>{{ invoice.InvoiceNumber }}</td>                           
+                                <td>{{ invoice.CreatedDate }}</td>
+                                <td>{{ invoice.BillingReason }}</td>
+                                <td>{{ invoice.ItemQuantity}} properties x ${{invoice.ItemAmount}}</td>
+                                <td>{{ invoice.AmountPaid }}</td>                    
+                                <td>{{ invoice.InvoiceStatus }}</td>
+                                <td><a href="{{ invoice.InvoicePDF }}" style="color: #8f1bdc; border-radius: 30px; border: 1px solid #8f1bdc; padding: 10px;"> Download</a></td>
+                               
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+</section>
+ 
+
+
+
+
+
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe('{{stripe_public_keys}}');
+    var elements = stripe.elements();
+
+    var style = {
+       
+           base: {
+            color: 'black',
+            fontSize: '20px',
+            padding:'100px',
+            // backgroundColor:'crimson',
+            '::placeholder': {
+                color: 'grey',
+                padding: '20px',
+            },
+           
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
+    };
+
+    var card = elements.create('card', {style: style});
+    card.mount('#card-element');
+
+    card.on('change', function(event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+                stripeTokenHandler(result.token);
+            }
+        });
+    });
+
+    function stripeTokenHandler(token) {
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+        form.submit();
+    }
+$('#myModal').modal('show');
+</script>
+
+
+{% endblock %}

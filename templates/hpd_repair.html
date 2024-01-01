@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% load static %}
+
+    {% block title %}HPD Repair And Vacate Orders | {% endblock %}
+    {% block canonical %}/hpd-repair-vacate-orders{% endblock %}
+
+
+{% block content %} <style>
+    .for-border {
+        border: none;
+        border-bottom: 2px solid grey;
+    }
+</style>
+<div class="container text-center" style="color: #2b044d;">
+    <br><br>
+    <br><br>
+    <nav aria-label="breadcrumb">
+         {% if messages %}
+          {% for message in messages %}
+            <div class=" alert alert-info">
+                {{ message }}
+            </div>
+          {% endfor %}
+          {% endif %}
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'hpd_data' %}" style="color: #8f1bdc;">HPD data</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">HPD Repair/Vacate Orders</li>
+        </ol>
+    </nav>
+    <br>
+    <br><br>
+    <div class="row" style=" height: max-content;"> {% if properties %} <div class="table-responsive">
+            <table style=" color: #8f1bdc;" class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col">Address</th>
+                        <th scope="col">Total Repairs/Vacate orders</th>
+                        <th scope="col">Visit  Repairs/Vacate orders</th>
+                    </tr>
+                </thead>
+                <tbody> {% for pro in properties %} <tr>
+                        <td>{{ pro.house }} {{ pro.street }}</td>
+                        <td>{{ pro.hpd_repairs.count.all }}</td>
+                        <!-- <td>{{ pro.complaints_link }} <i class="fas fa-external-link"></i></td> -->
+                        <td><a href="{% url 'hpd_repairs_by_property' pro.id %}" style="color: #8f1bdc;"><i
+                                    class="fas fa-link"></i> Visit</a></td>
+                    </tr> {% endfor %} </tbody>
+            </table>
+        </div> {% endif %} </div>
+</div>
+<br>
+<br>
+<br><br> {% endblock %}

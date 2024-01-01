@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block title %}Cancel Subscription | {% endblock %}
+    {% block canonical %}/cancel-subscription{% endblock %}
+
+{% block content %}
+
+<br>
+<br>
+
+
+
+
+<div style="padding-top: 60px; height: 100%;" class="available-app-area mt-50">
+
+    <div class="container text-center">
+        <h4 style="text-align: center; font-weight: bold; margin-top: 0%; padding-top: 0%;" class="display-4">Your
+            request for cancelation of your subscription has bessn submitted</h4>
+               <p>Your subscription will be deleted as soon after our team successfull review of your account.</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a href="{% url 'home' %}" class="btn  card-btn1">Home</a>
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

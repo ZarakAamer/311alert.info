@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+    {% block title %}HPD BEDBUGS Reports | {% endblock %}
+    {% block canonical %}/hpd-bedbug-reports-by-property/{{property.id}}{% endblock %}
+
+{% load static %} {% block content %} <style>
+    .for-border {
+        border: none;
+        border-bottom: 2px solid grey;
+    }
+</style>
+<div class="container text-center" style="color: #2b044d;">
+    <br><br>
+    <br><br>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+             {% if messages %}
+          {% for message in messages %}
+            <div class=" alert alert-info">
+                {{ message }}
+            </div>
+          {% endfor %}
+          {% endif %}
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'hpd_bedbug' %}"
+                    style="color: #8f1bdc;">HPD Bed Bug Reports</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{property.house}} {{property.street}} </li>
+        </ol>
+    </nav>
+    <br>
+    <br><br>
+    
+    <h2 style="color: #2b044d;">{{ property.hpd_bedbugs.all.count}} HPD Bed Bug Reports for {{property.street}} {{property.house}}</h2>
+    <hr>
+    <div class="accordion text-center" id="accordionExamplecomplaints"> {% for i in bedbugs %} 
+        <div class="row text-center mx-auto" style="min-width: 100%;">
+            <div class="card text-center max-auto" style="min-width: 100%;">
+                <div class=" card-header" id="headingTwo{{i.id}}">
+                    <h5 class="mb-0">
+                        <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;"
+                            class="btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo{{i.id}}" aria-expanded="false"
+                            aria-controls="collapseTwo{{i.id}}"> Registration ID: {{ i.registration_id }}
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo{{i.id}}" class="collapse" aria-labelledby="headingTwo{{i.id}}"
+                    data-parent="#accordionExamplecomplaints">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table style=" color: #8f1bdc;" class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Postcode</th>
+                                        <th scope="col">Of Dwelling Units</th>
+                                        <th scope="col">Infested Dwelling Unit Count</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ i.postcode }}</td>
+                                        <td>{{ i.of_dwelling_units }}</td>
+                                        <td>{{ i.infested_dwelling_unit_count }}</td>
+                                        <!-- <td>{{ i.status }}</td> -->
+                                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#exampleModalLong{{i.id}}1">Details</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModalLong{{i.id}}1" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 75% !important;" role="document">
+                <div class="modal-content" style="min-width: 35% !important;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>{{i.property.house}} {{i.property.street}}, {{i.property.borough}}</h3>
+                        <hr>
+                        <br>
+                        <div class="row">
+                             <div class="col-md-3">
+                                <strong>Postcode: </strong>{{ i.postcode }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Of Dwelling Units:</strong> {{ i.of_dwelling_units }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Infested Dwelling Unit Count: </strong> {{ i.infested_dwelling_unit_count }}
+                            </div>
+                             <div class="col-md-3">
+                                <strong> Eradicated Unit Count: </strong>{{ i.eradicated_unit_count }}
+                            </div>
+                           
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>Re Infested Dwelling Unit:</strong> {{i.re_infested_dwelling_unit}}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Filing Date: </strong>{{i.filing_date}}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Filing Period Start Date :</strong> {{i.filing_period_start_date}}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Filing Period End Date :</strong> {{i.filling_period_end_date}}
+                            </div>
+                        </div>
+                        <hr><br>
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <strong>Community Board:</strong> {{i.community_board}}
+                            </div>
+                             <div class="col-md-3">
+                                <strong> City Council District:</strong> {{i.city_council_district}}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong>Census Tract 2010:</strong> {{i.census_tract_2010 }}
+                            </div>
+
+                             <div class="col-md-3">
+                                <strong> NTA:</strong> {{i.nta }}
+                            </div>
+
+                            
+
+                        </div>
+                      
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> {% endfor %}
+    </div>
+    <!-- </div>
+</div>
+</div> -->
+    <br><br>
+    <hr><br><br>
+   
+</div>
+</div>
+<br>
+<br>
+<br><br>
+{% endblock %}

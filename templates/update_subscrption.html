@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- Best Pricing Start -->
+
+
+
+<style>
+    input {
+        margin: 5px;
+        min-width: 100%;
+    }
+
+    .price_list>li {
+        border: 1px solid #8f1bdc;
+        border-radius: 8px;
+        padding: 10px 20px 10px 20px;
+        margin-left: 30px;
+
+    }
+
+    .second_class {
+        margin-left: 50px;
+        border-radius: 5px;
+        padding: 40px;
+    }
+
+    @media screen and (max-width:767px) {
+
+        .price_list>li {
+
+            margin-left: auto;
+
+        }
+
+        .second_class {
+            margin-left: auto;
+        }
+    }
+</style>
+<!-- Best Pricing Start -->
+<div>
+
+    <div style="margin-top: 220px; margin-bottom: 200px;" class="container text-center">
+ {% if messages %}
+          {% for message in messages %}
+            <div class=" alert alert-info">
+                {{ message }}
+            </div>
+          {% endfor %}
+          {% endif %}
+        <div class="section-tittle section-tittle3">
+            <h2 class="text-center">Upgrade your subscription.</h2>
+
+
+
+            <div class="row text-center">
+                <div class="col-md-8 text-center" style="margin-left: auto; margin-right: auto;">
+
+                    <p>Fill the form below to upgrade your subscription.</p>
+                    <li style="border-radius: 10px; border: 1px #8f1bdc;">Charges For Each Property $8/<sub>month</sub> and $72/<sub>year</sub></li>
+<br>
+                    <div class="row adding-row text-center "
+                        style="border-radius: 5px; padding: 50px;">
+
+                        <form action="{% url 'change_subscription' %}" method="post"
+                            style="margin-left: auto; margin-right: auto;">
+                            {% csrf_token %}
+                            <div class=" row">
+                                <input type="number" name="number" placeholder="No of properties (e.g 11)">
+                            </div>
+                            {% if profile.is_yearly %}
+
+                                
+                            <input type="hidden" name="subscription_interval" value="{{price.price_change_to_year}}">
+                            {% else %}
+                            <div class="row">
+                                    <select name="subscription_interval" >
+                                        <option value="{{ price.price_change_to_month }}">Monthly</option>
+                                        <option value="{{ price.price_change_to_year}}">Yearly</option>
+                                    </select>
+                                </div>
+                            {% endif %}
+<br>
+                            <button type="submit" class="btn">Submit</button>
+                        </form>
+                    </div>
+
+                </div>
+
+              </div>
+        </div>
+    </div>
+
+
+    <br>
+  <div class="mobile-apps">
+
+        <div class="container text-center">
+        
+            <div class="row">
+                <div class="col-md-6 " style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+                    
+                    <p style="color: #8f1bdc;">You can download 311alert from app store and google play</p>
+                    
+                    <h3 style="color: black; font-weight: bold;">Download Now</h3>
+                    <div class="purple-line"></div>
+                    
+                </div>
+                <div class="col-md-6" style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin-left: auto;">
+                    <a href="#" class="app-btn1">
+                        <img src="{% static 'assets/img/shape/app_btn1.png' %}" alt="">
+                    </a>
+
+                    <a href="#" class="app-btn2"><img src="{% static 'assets/img/shape/app_btn2.svg' %}" alt=""></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Available App End-->
+
+<!-- Say Something Start -->
+<div class="say-something-aera pt-90 pb-90 fix">
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="offset-xl-1 offset-lg-1 col-xl-5 col-lg-5">
+                <div class="say-something-cap">
+                    <h2>Say Hello To The Collaboration Hub.</h2>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-3">
+                <div class="say-btn">
+                    <a href="{% url 'contact' %}" class="btn radius-btn">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- shape -->
+    <div class="say-shape">
+        <img src="{% static 'assets/img/shape/say-shape-left.png' %}" alt=""
+            class="say-shape1 rotateme d-none d-xl-block">
+        <img src="{% static 'assets/img/shape/say-shape-right.pn' %}" alt="" class="say-shape2 d-none d-lg-block">
+    </div>
+</div>
+<!-- Say Something End -->
+
+
+
+
+
+
+{% endblock %}

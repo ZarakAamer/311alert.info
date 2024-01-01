@@ -1,0 +1,268 @@
+{% extends 'base.html' %} {% load static %} {% block content %} <style>
+    .for-border {
+        border: none;
+        border-bottom: 2px solid grey;
+    }
+</style>
+<div class="container text-center" style="color: #2b044d;">
+    <br><br>
+    <br><br>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'voilations' %}"
+                    style="color: #8f1bdc;">Voilations</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{property.house}} {{property.street}}</li>
+        </ol>
+    </nav>
+    <br>
+    <br><br>
+    <div class="accordion text-center" id="accordionExampleviolations"> {% for i in voilations %} <div
+            class="row text-center mx-auto" style="min-width: 100%;">
+            <div class="card text-center max-auto" style="min-width: 100%;">
+                <div class=" card-header" id="headingTwo{{i.id}}">
+                    <h5 class="mb-0">
+                        <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;"
+                            class="btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo{{i.id}}" aria-expanded="false"
+                            aria-controls="collapseTwo{{i.id}}"> Violation Number: {{i.number}} </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo{{i.id}}" class="collapse" aria-labelledby="headingTwo{{i.id}}"
+                    data-parent="#accordionExampleviolations">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table style=" color: #8f1bdc;" class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Number</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Issue Date</th>
+                                        <th scope="col">Action</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ i.number }}</td>
+                                        <td>{{ i.violation_type }}</td>
+                                        <td>{{ i.issue_date }}</td>
+                                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#exampleModalLong{{i.id}}1">Details</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModalLong{{i.id}}1" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 75% !important;" role="document">
+                <div class="modal-content" style="min-width: 35% !important;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>{{i.property.house}} {{i.property.street}}, {{i.property.borough}}</h3>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong> Number: </strong> {{i.number}}
+                            </div>
+                            <div class="col-md-3">
+                                <strong> Voilation Number: </strong>{{i.violation_number}}
+                            </div>
+                            <div class="col-md-3">
+                                <strong> Issue Date:</strong> {{i.issue_date}}
+                            </div>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong> Device Number: </strong>{{i.device_number}}
+                            </div>
+                            <div class="col-md-6">
+                                <strong> ECB Number:</strong> {{i.ecb_number}}
+                            </div>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong> Voilation Category:</strong> {{i.violation_category}}
+                            </div>
+                            <div class="col-md-6">
+                                <strong> Voilation Type: </strong>{{i.violation_type}}
+                            </div>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <strong> Disposition Comments:</strong> {{i.disposition_comments}}
+                            </div>
+                            <div class="col-md-4">
+                                <strong> Disposition Date: </strong>{{i.disposition_date}}
+                            </div>
+                        </div>
+                        <hr><br>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <strong> Description: </strong> {{i.description}}
+                            </div>
+                            <div class="col-md-3">
+                                <strong> See it on DOB BIS: </strong> <a style="color: #8f1bdc;" target="_blank"
+                                    href="{{i.link}}"> Click Here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> {% endfor %}
+    </div>
+    <br><br>
+    <hr><br><br>
+    <!-- <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;" class="btn-link collapsed"
+                        type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                        aria-controls="collapseThree"> Resolved violations <span style="color: #2b044d;"> ({{
+                            res_voilations.all.count}}) </span>
+                    </a>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="accordion text-center" id="accordionExampleresviolations"> {% for i in res_voilations %}
+                        <div class="row text-center mx-auto" style="min-width: 100%;">
+                            <div class="card text-center max-auto" style="min-width: 100%;">
+                                <div class="card-header" id="headingThree{{i.id}}">
+                                    <h5 class="mb-0">
+                                        <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;"
+                                            class="btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseThree{{i.id}}" aria-expanded="false"
+                                            aria-controls="collapseThree{{i.id}}"> violation location: violation
+                                            location: {{ i.property.house}}
+                                            {{i.property.street}}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree{{i.id}}" class="collapse" aria-labelledby="headingThree{{i.id}}"
+                                    data-parent="#accordionExampleresviolations">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table style=" color: #8f1bdc;" class="table table-borderless">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Number</th>
+                                                        <th scope="col">Category</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Issue Date</th>
+                                                        <th scope="col">Action</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{ i.number }}</td>
+                                                        <td>{{ i.violation_category }}</td>
+                                                        <td>{{ i.violation_type }}</td>
+                                                        <td>{{ i.issue_date }}</td>
+                                                        <td><button type="button" class="btn btn-primary"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModalLong{{i.id}}1">Details</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="exampleModalLong{{i.id}}1" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" style="max-width: 75% !important;" role="document">
+                                <div class="modal-content" style="min-width: 35% !important;">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>{{i.property.house}} {{i.property.street}}, {{i.property.borough}}</h3>
+                                        <hr>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong> Number: </strong> {{i.number}}
+                                            </div>
+                                            <div class="col-md-3">
+                                                <strong> Voilation Number: </strong>{{i.violation_number}}
+                                            </div>
+                                            <div class="col-md-3">
+                                                <strong> Issue Date:</strong> {{i.issue_date}}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong> Device Number: </strong>{{i.device_number}}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong> ECB Number:</strong> {{i.ecb_number}}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong> Voilation Category:</strong> {{i.violation_category}}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <strong> Voilation Type: </strong>{{i.violation_type}}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <strong> Disposition Comments:</strong> {{i.disposition_comments}}
+                                            </div>
+                                            <div class="col-md-4">
+                                                <strong> Disposition Date: </strong>{{i.disposition_date}}
+                                            </div>
+                                        </div>
+                                        <hr><br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <strong> Description: </strong> {{i.description}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div> -->
+</div>
+</div>
+<br>
+<br>
+<br><br> {% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'base.html' %} {% load static %}
+
+    {% block title %}HPD Repair And Vacate Orders | {% endblock %}
+    {% block canonical %}/hpd-repair-vacate-orders-by-property/{{property.id}}{% endblock %}
+
+
+{% block content %} <style>
+    .for-border {
+        border: none;
+        border-bottom: 2px solid grey;
+    }
+</style>
+<div class="container text-center" style="color: #2b044d;">
+    <br><br>
+    <br><br>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+             {% if messages %}
+          {% for message in messages %}
+            <div class=" alert alert-info">
+                {{ message }}
+            </div>
+          {% endfor %}
+          {% endif %}
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'home' %}" style="color: #8f1bdc;">Home</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'hpd_violations' %}"
+                    style="color: #8f1bdc;">HPD Repair/Vacate Orders</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{property.house}} {{property.street}} </li>
+        </ol>
+    </nav>
+    <br>
+    <br><br>
+    
+    <h2 style="color: #2b044d;">{{ property.hpd_repairs.all.count}} HPD Repair/Vacate orders for {{property.street}} {{property.house}}</h2>
+    <hr>
+    <div class="accordion text-center" id="accordionExamplecomplaints"> {% for i in hpd_repairs %} 
+        <div class="row text-center mx-auto" style="min-width: 100%;">
+            <div class="card text-center max-auto" style="min-width: 100%;">
+                <div class=" card-header" id="headingTwo{{i.id}}">
+                    <h5 class="mb-0">
+                        <a style="text-decoration: underline; color: #8f1bdc; cursor: pointer;"
+                            class="btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo{{i.id}}" aria-expanded="false"
+                            aria-controls="collapseTwo{{i.id}}"> Vacate Order Number: {{ i.vacate_order_number }}
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo{{i.id}}" class="collapse" aria-labelledby="headingTwo{{i.id}}"
+                    data-parent="#accordionExamplecomplaints">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table style=" color: #8f1bdc;" class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Primary Vacate Reason</th>
+                                        <th scope="col">Vacate Type</th>
+                                        <th scope="col">Vacate Effective Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ i.primary_vacate_reason }}</td>
+                                        <td>{{ i.vacate_type }}</td>
+                                        <td>{{ i.vacate_effective_date }}</td>
+                                        <!-- <td>{{ i.status }}</td> -->
+                                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#exampleModalLong{{i.id}}1">Details</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModalLong{{i.id}}1" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 75% !important;" role="document">
+                <div class="modal-content" style="min-width: 35% !important;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>{{i.property.house}} {{i.property.street}}, {{i.property.borough}}</h3>
+                        <hr>
+                        <br>
+                        <div class="row">
+                             <div class="col-md-3">
+                                <strong>Primary Vacate Reason: </strong>{{ i.primary_vacate_reason }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Vacate Type:</strong> {{ i.vacate_type }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong>Vacate Effective Date: </strong> {{ i.vacate_effective_date }}
+                            </div>
+                             <div class="col-md-3">
+                                <strong> Actual Rescind Date: </strong>{{ i.actual_rescind_date }}
+                            </div>
+                           
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong> Number Of Vacated Units:</strong> {{i.number_of_vacated_units}}
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Postoce: </strong>{{i.postoce}}
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Community Board:</strong> {{i.community_board}}
+                            </div>
+
+                        </div>
+                        <hr><br>
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <strong> Council District:</strong> {{i.council_district}}
+                            </div>
+
+                            <div class="col-md-4">
+                                <strong>Census Tract:</strong> {{i.census_tract }}
+                            </div>
+
+                             <div class="col-md-4">
+                                <strong> NTA:</strong> {{i.nta }}
+                            </div>
+
+                            
+
+                        </div>
+                      
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> {% endfor %}
+    </div>
+    <!-- </div>
+</div>
+</div> -->
+    <br><br>
+    <hr><br><br>
+   
+</div>
+</div>
+<br>
+<br>
+<br><br>
+{% endblock %}

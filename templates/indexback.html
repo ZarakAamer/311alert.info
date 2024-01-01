@@ -1,0 +1,749 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+    
+        .hero__caption {
+            background-color: #ffff;
+            height: inherit;
+            clip-path: polygon(0 0%, 0 60%, 30% 0);
+            padding-top: 50px;
+        
+           
+        }
+        .hero__caption  h1{
+            font-weight: bold;
+    }
+    .hero__caption p{
+        font-weight: bolder;
+         color: black;
+    }
+
+    .slider-btns{
+        	margin-left: 30px;
+    }
+
+
+
+
+      .first {
+            margin-top: 100px;
+            display: flex;
+            flex-direction: row;
+            max-height: 900px;
+            height: 200px;
+            min-width: 100%;
+        }
+
+        .first .div1 {
+            padding: 10px;
+            width: 700px;
+        }
+
+
+        input {
+            padding: 8px;
+            width: 100%;
+        }
+
+        textarea {
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid grey;
+        }
+        .p-settings{
+            margin-top: -110px;
+        }
+
+
+
+
+
+
+        select {
+
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid grey;
+            text-align: center;
+            font-size: medium;
+            padding: 8px;
+            width: 100%;
+        }
+
+
+.first-card, .second-card, .third-card{
+    margin-top: -240px;
+    background-color: #ffff;
+    padding: 20px;
+    clip-path: polygon(0% 0%, 75% 0%, 95% 50%, 75% 100%, 0% 100%);
+}
+
+
+.hero-sect{
+position: relative;
+ width: 100%;
+ height: 100vh;
+ margin-top: 90px;
+}
+
+.hero-sect img {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  opacity: 1;
+  /* transition: opacity 0.5s ease; */
+    z-index: -1;
+}
+
+    @media screen and (min-width:1092px) and (max-width:1422px) {
+
+    .hero__caption {
+            clip-path: polygon(0 0%, 0 60%, 40% 0);
+
+                }
+    
+    }
+
+
+    
+    @media screen and (min-width:767px) and (max-width:1091px) {
+
+    .hero__caption {
+            clip-path: polygon(0 0%, 0 60%, 60% 0);
+
+                }
+    
+    }
+
+
+ 
+
+
+     
+    @media screen and (min-width:767px) and (max-width:991px) {
+
+
+         .first {
+                display: flex;
+                flex-direction: row;
+                min-width: 100%;
+
+            }
+
+            .first .div1 {
+                padding: 14px;
+                width: 500px;
+            }
+                  .p-settings{
+            margin-top: -50px;
+        }
+
+
+
+            input {
+                font-size: medium;
+                padding: 8px;
+                width: 100%;
+            }
+
+
+    }
+
+
+    #card__1, #card__2, #card__3{
+
+        margin: 15px;
+        padding: 10px;
+        border-radius: 20px;
+        margin-top: -400px;
+
+    }
+
+        @media (min-width: 300px) and (max-width: 767px) {
+            
+            
+            .first {
+                display: flex;
+                flex-direction: column;
+                min-width: 100%;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                margin-top: 1px;
+                height: 50vh;
+
+            }
+                  .p-settings{
+            margin-top: -10px;
+        }
+
+
+            .first .div1 {
+                padding: 14px;
+                width: 300px;
+            }
+
+
+            input {
+                font-size: medium;
+                padding: 8px;
+                width: 100%;
+            }
+
+
+
+            .the-wrapper{
+                margin-top: 100px;
+                height: 100vh;
+                overflow-y: auto;
+                overflow-x: hidden;
+                perspective: 100px;
+                
+            }
+
+
+            .hero-sect{
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                transform-style: preserve-3d;
+                z-index: -10;
+            }
+
+
+            #index_image_id{
+                transform: translateZ(-200px) scale(3);
+                margin-top: -300px;
+            }
+
+.cards-content{
+    background-color: transparent;
+}
+
+
+                #card__1, #card__2, #card__3{
+
+                margin: 15px;
+                padding: 10px;
+                border-radius: 40px;
+                margin-top: 0px;
+                min-height: max-content;
+
+
+    }
+
+    #hero__caption{
+        background-color: #f6f0fa46;
+        clip-path: none;
+        /* text-align: center; */
+        /* align-items: center; */
+        height: max-content;
+        padding-bottom: 30px;
+        border-radius: 30px;
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+        margin-top: -700px;
+
+    }
+.slider-btns{
+    margin: 0px;
+}
+
+        }
+
+</style>
+{% if messages %}
+
+{% for message in messages %}
+<div class=" alert alert-info">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% endif %}
+
+
+
+<div class="the-wrapper">
+<section class="hero-sect">
+<img src="{% static 'assets/img/index.jpeg' %}" alt="" id="index_image_id">
+
+
+<div class="hero__caption col-md-12" id="hero__caption">
+            
+            
+            <h1 >
+                Real-time Alerts
+            </h1>
+           
+            <p>Why
+                stress over your properties, <br>Simply add them here, and recieve 
+                <br>
+                <i>
+                realtime-alerts
+            </i>.</p>
+            <!-- Slider btn -->
+            {% if request.user.is_authenticated %}
+            {% else %}
+            <div class="slider-btns">
+                <!-- Hero-btn -->
+                <a href="{% url 'register' %}"
+                    class="btn radius-btn">Sign Up</a>
+                <!-- Video Btn -->
+            </div>
+            {% endif %} 
+        </div>
+
+</section>
+
+
+
+
+<section class="service-area white-bg section-padding2 cards-content">
+    <div class="container" style="min-width: 98%;">
+        <div class="row d-flex justify-content-center align-items-center  " >
+          
+
+
+
+            <div id="card__1" class="col-md-4 text-center" style="background-color: #8f1bdc; color: #ffff;   box-shadow: 2px #2b044d; ">
+                <h2 style="font-weight: bolder; margin-top: 40px;  color: #ffff">
+                    Welcome to 311 Alert
+                </h2>
+                <p style="margin-top :40px; padding: 20px; font-weight: 500;  color: #ffff">
+                    your source for up-to-date information on 311 notifications for properties in New York City. Our mission is to provide real estate professionals and property owners with accurate and timely information on 311 complaints and violations. Sign up today for accurate and timely 311 alerts for New York properties 
+                </p>
+            </div>
+
+            <div id="card__2" class="col-md-3 text-center" style="background-color: #ffff; box-shadow: 2px; box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);">
+
+                <h3 style="font-weight: bold; margin-top: 30px;">
+                    Easy Access to 311 Notifications
+                </h3>
+                <p style="padding: 20px; font-weight: 500;">
+                    Accessing this important information is easy through our user-friendly website. Search properties by address or borough. You can also subscribe to our email alerts.
+                </p>
+            </div>
+
+            <div id="card__3" class="col-md-3 text-center" style="background-color: #ffff;  box-shadow: 2px; box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);">
+
+                <h3 style="font-weight: bold; margin-top: 30px;">Accurate Information</h3>
+                <p style="padding: 20px; font-weight: 500;">
+                    Get detailed and accurate information on complaints or violations, including dates and statuses. Whether you're a property owner or a real estate professional, 311 Alert has you covered.
+                </p>
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+</div>
+
+<script>
+    
+let index_image = document.getElementById("index_image_id");
+let hero__caption = document.getElementById("hero__caption");
+let card__1 = document.getElementById("card__1");
+let card__2 = document.getElementById("card__2");
+let card__3 = document.getElementById("card__3");
+
+function updateScrollEffects() {
+  let value = window.scrollY;
+
+  if (window.matchMedia("(min-width: 768px)").matches) {
+    // Apply scroll effects for larger screens
+    card__1.style.marginTop = -value * 1.67 + "px";
+    card__2.style.marginTop = -value * 1.2 + "px";
+    card__3.style.marginTop = -value * 1 + "px";
+    hero__caption.style.marginTop = -value + "px";
+    index_image.style.marginTop = value * 1.52 + "px";
+  } 
+//   else if (window.matchMedia("(max-width: 768px)").matches) {
+//     // Apply scroll effects for smaller screens
+//     card__1.style.height = "max-content";
+//     card__1.style.marginTop = -value * 4.87 + "px";
+//     card__2.style.marginTop = -value * 1.2 + "px";
+//     card__3.style.marginTop = -value * 0.009 + "px";
+//     hero__caption.style.marginTop = -value + "px";
+//     index_image.style.marginTop = value * 1.52 + "px";
+//   }
+
+  // Calculate opacity based on scroll position
+  var opacity = 1 - value / window.innerHeight;
+
+  // Limit opacity to a minimum of 0 and a maximum of 1
+  opacity = Math.max(0, opacity);
+  opacity = Math.min(1, opacity);
+
+  // Apply opacity to the image
+  index_image.style.opacity = opacity.toString();
+}
+
+window.addEventListener("scroll", updateScrollEffects);
+window.addEventListener("resize", updateScrollEffects);
+
+</script>
+
+<section class="white-bg" >
+<div class="container text-center">
+    <br>
+    <br>
+    <br><br>
+    <h2 style="color: #2b044d">
+        Search Property From Here
+    </h2>
+    <br><br>
+
+
+
+
+    <div class="first">
+        <div class="div1">
+            <select class="form-select form-select-lg mb-3" id="brg" style="width: 100%;">
+                <option selected>Select a Borough</option>
+                <option value="1">Manhattan</option>
+                <option value="2">Bronx</option>
+                <option value="3">Brooklyn</option>
+                <option value="4">Queens</option>
+                <option value="5">Staten Island</option>
+
+            </select>
+
+        </div>
+
+        <div class="div1">
+            <input name="housenumber" value="" type="text" id="hnum" placeholder="House No.">
+        </div>
+
+        <div class="div1">
+            <input name="streetnumber" value="" type="text" id="snum" placeholder="Street Name.">
+        </div>
+
+        <div class="div1">
+            <a href="#" onclick="searchproperty()" id="seacher" class="batn">
+                <h1
+                    style="border-radius: 5px; padding: 10px; font-size: medium; color: white; background-color: #8f1bdc;">
+                    SEARCH</h1>
+            </a>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        function searchproperty() {
+            console.log("Ayeee Hyeee")
+            let snumber = document.getElementById("snum").value.replace(" ", "+");
+            let hnumber = document.getElementById("hnum").value;
+            let boro = document.getElementById("brg").value;
+            let link = document.getElementById("seacher");
+            console.log(snumber)
+
+            console.log(hnumber)
+            console.log(boro)
+            link.href = "https://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=" + boro + "&houseno=" + hnumber + "&street=" + snumber + "&go2=+GO+&requestid=0"
+        }
+    </script>
+
+</div>
+</section>
+
+<section class="service-area section-padding2" style="background-color: #ffff;">
+    <div class="container">
+        <!-- Section Tittle -->
+        
+        <!-- Section caption -->
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                <div class="services-caption text-center">
+                    <div class="service-icon">
+                        <span class="flaticon-businessman"></span>
+                    </div>
+                    <div class="service-cap">
+                        <h4><a href="#">Easily Manage</a></h4>
+                        <p>It takes just three easy steps, You simply create an account, select a plan, and add.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6">
+                <div class="services-caption text-center mb-30">
+                    <div class="service-icon">
+                        <span class="flaticon-pay"></span>
+                    </div>
+                    <div class="service-cap">
+                        <h4><a href="#">Card Payments</a></h4>
+                        <p>Simply add your credit card and pay the actual amount, there is no hidden fees.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6">
+                <div class="services-caption text-center mb-30">
+                    <div class="service-icon">
+                        <span class="flaticon-plane"></span>
+                    </div>
+                    <div class="service-cap">
+                        <h4><a href="#">Quick Support</a></h4>
+                        <p>If you need prompt technical assistance, our team is avalible 24/7 to assist you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services Area End -->
+<!-- Applic App Start -->
+
+<!-- Applic App End -->
+<!-- Best Pricing Start -->
+<section class="mt-30 white-bg">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="section-tittle section-tittle2 text-center mt-3">
+                    <h2 style="color: #2b044d">Choose One Of Our Best Price Plans.</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+  <div class="container text-center white-bg">
+    <div class="row  text-center justify-content-center align-items-center">
+      {% for i in prices %}
+
+      <div
+        class="col-xl-4 col-lg-4 col-md-6 "
+        style="margin-left: auto; margin-right: auto;"
+      >
+        <div
+          class="single-card text-center mb-30"
+          style="width: 80%; border-radius: 50px; margin-left: auto; margin-right: auto;"
+        >
+          <div class="card-top">
+            <span>{{i.name}}</span>
+
+            <h4
+              id="pricetag{{i.id}}"
+              style="
+                background-color: #8f1bdc;
+                width: 150% !important;
+                border-radius: 70px;
+                color: #ffff;
+                margin-left: -60px;
+                margin-bottom: -20px;
+              "
+            >
+              ${{ i.price_per_month }}
+               <span style="font-size: xx-small; color: #ffff"
+                >/month</span
+              >
+            </h4>
+           
+          </div>
+          <div class="card-bottom">
+            <ul>
+              <div
+                class="section-tittle d-flex align-items-center"
+                style="justify-content: center"
+              >
+               <button
+                  onclick="showMonthly('{{i.id}}', '{{i.price_per_month}}', '{{i.first_month_token}}')"
+                  id="month{{i.id}}"
+                  class="btn card-btn1"
+                  style="
+                    border-radius: 30px 0px 0px 30px !important;
+                    width: 100px;
+                    padding-right: 100px;
+           
+                    ">
+                  Monthly
+                </button>
+              <!-- onclick="document.getElementById('pricetag{{i.id}}').innerHTML='{{i.price_per_year}}'; this.style.backgroundColor = 'white'; this.style.color = '#8f1bdc';  document.getElementById('month{{i.id}}').style.backgroundColor = '#8f1bdc'; document.getElementById('month{{i.id}}').style.color = 'white'; document.getElementById('price_token{{i.id}}').value = '{{i.yearly_token}}'" -->
+                <button
+                onclick="showYearly('{{i.id}}', '{{i.price_per_year}}', '{{i.first_year_token}}')"
+                  id="yearbtn{{i.id}}"
+                  class="btn card-btn1"
+                  style="
+                    border-radius: 0px 30px 30px 0px !important;
+                    width: 100px;
+                    padding-right: 100px;
+                    color: #8f1bdc;
+                    background-color: #ffff;
+                  "
+                >
+                  Yearly
+                </button>
+               
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+              </div>
+              <li>Properties: {{ i.number_of_properties }}</li>
+              <li>Email support: Yes</li>
+              <li>whatsapp support: Yes</li>
+            </ul>
+
+            {% if profiled %}
+            <a href="{% url 'update_subscription' %}" style="border-radius: 30px !important"  class="btn card-btn1">Upgrade</a>
+
+            {% else %}
+            <form action="{% url 'pro' %}" method="post">
+              {% csrf_token %}
+
+              <input
+                id="price_token{{i.id}}"
+                type="hidden"
+                name="account_type"
+                value="{{i.first_month_token}}"
+
+              />
+
+              <button
+                type="submit"
+                class="btn card-btn1"
+                style="border-radius: 30px !important"
+              >
+                Get Started
+              </button>
+            </form>
+
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <script>
+
+    function showMonthly(id, monthlyprice, token){
+          document.getElementById('pricetag'+id).innerHTML=  '$'+monthlyprice+` <span style="font-size: x-small; color: #ffff">/month</span >`;
+          document.getElementById('month'+id).style.backgroundColor = '#8f1bdc';
+          document.getElementById('month'+id).style.color = 'white'; 
+          document.getElementById('yearbtn'+id).style.backgroundColor = 'white';
+          document.getElementById('yearbtn'+id).style.color = '#8f1bdc'; 
+          document.getElementById('price_token'+id).value = token;
+      }
+      
+      
+      function showYearly(id, yearlyprice, token){
+          document.getElementById('pricetag'+id).innerHTML= '$'+yearlyprice+` <span style="font-size: x-small; color: #ffff">/year</span >`;
+           document.getElementById('yearbtn'+id).style.backgroundColor = '#8f1bdc';
+          document.getElementById('yearbtn'+id).style.color = 'white'; 
+          document.getElementById('month'+id).style.backgroundColor = 'white';
+          document.getElementById('month'+id).style.color = '#8f1bdc'; 
+          document.getElementById('price_token'+id).value = token;
+      
+      }
+      
+        
+          </script>
+</section>
+
+        
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <section >
+    <div class="service-area">`
+        <div class="container text-center">
+
+            <form class="form-contact contact_form" action="{% url 'contact' %}" method="post" id="contactForm"
+                novalidate="novalidate">
+                <h1 style="color: #2b044d;">Contact Us</h1>
+                <br>
+                <br><br>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <input class="" name="name" id="name" type="text" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="">
+                            <input class="" name="email" id="email" type="email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+
+                        <input name="subject" id="subject" type="text" placeholder="Subject">
+                        <br>
+                        <br>
+
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <textarea class=" w-100" name="message" id="message" cols="30" rows="9"
+                                placeholder="Message"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-3">
+                    <button type="submit"
+                        style="border: 2px solid #8f1bdc; border-radius: 5px; padding: 10px 40px; font-size: medium; color: white; background-color: #8f1bdc;">SEND</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+    </section>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="mobile-apps">
+        <div class="container text-center">
+            <div class="row">
+
+                <h2 style="font-size: xx-large; 
+    color: white;">311Alert is avalible to be used on any device. Download Now</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="app-btn1">
+                        <img src="{% static 'assets/img/shape/app_btn1.png' %}" alt="">
+                    </a>
+
+                    <a href="#" class="app-btn2"><img src="{% static 'assets/img/shape/app_btn2.svg' %}" alt=""></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    {% endblock %}
