@@ -77,6 +77,9 @@ def terms_of_use(request):
     return render(request, 'terms_of_use.html', {"terms": terms})
 
 
+def about_us(request):
+    return render(request, 'about.html')
+
 
 def upload(request):
     if request.method == "POST":
@@ -85,6 +88,5 @@ def upload(request):
     return redirect("home")
 
 
-
 def uploading(request):
-    return render(request,"uploading.html")
+    return render(request, "uploading.html")

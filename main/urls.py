@@ -44,6 +44,7 @@ urlpatterns = [
     path('creating-ticket', ticket_process, name="creating"),
     path('privacy-and-policy', privacy_policy, name="privacy"),
     path('terms-of-use', terms_of_use, name="terms"),
+    path('about-311alert-info', about_us, name="aboutus"),
 
 
     # -------------------dob urls----------------

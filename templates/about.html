@@ -1,40 +1,153 @@
 {% extends 'base.html' %}
 {% load static %}
     {% block title %}About Us| 311 Alert Info {% endblock %}
+    {% block description %}  Learn About Us and Our Services: Discover Pricing and Plans for 311 Alert and HPD Online Real-Time Notifications - Get in Touch for More Information and Register to Start Receiving Timely Updates for Your Properties {% endblock %}
     {% block canonical %}/about{% endblock %}
 
 {% block content %}
 
-        <!-- Best Pricing Start -->
-    <br><br>
+
+
+
+
+
+
+<br />
+<br />
+<br /><br /><br />
+<br />
+
+
+
+
+<style>
+
+
+
+
+
+.purple-line{
+    width: 105px; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+}
+
+.pricing-icon-container{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='90' viewBox='0 0 100 90'%3E%3Cpath id='bg-01' d='M235.182,2881.254c-13.609,27.03,37.419,54.228,74.2,41.818,51.873-17.5,6.863-111.753-28-80.669C255.595,2865.4,247.333,2857.119,235.182,2881.254Z' transform='translate(-232.93 -2836.163)' fill='%238f1bdc'/%3E%3C/svg%3E%0A");
+    background-size: cover;
+    height: 90px;
+    width: 100px;
+    margin: 30px;
+}
+
+
+
+
+  @media(max-width:767px){
+   
+    .purple-line{
+    width: 80%; 
+    background-color: #8f1bdc; 
+    min-height: 3px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+}
+
+
+
+
+
+ 
+
+</style>
+
+
+<section class="white-bg text-center align-items-center" style="margin-top: 10px; margin-bottom: 200px; padding: 0 15px;">
+    <div class="row d-flex text-center align-items-center justify-content-center" style="flex-direction: column; text-align: center; align-items: center;">
+        <div class="col-sm-10 col-md-8">
+            <p style="color: #8f1bdc;">About Us</p>
+            <h1 style="font-weight: bold;">Learn About 311alert.info</h1>
+                     <p>     We're dedicated to empowering real estate professionals and property owners with the latest and most accurate information on 311 complaints and violations across New York City's five boroughs.
+           </p>
+        </div>
+        <div class="purple-line"></div>
+        <br><br>
+    </div>
+
+
         <div class="available-app-area mt-50">
             <div class="container">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-xl-5 col-lg-6">
-                        <div class="app-caption">
-                            <div class="section-tittle section-tittle3">
-                                <h2>You are already a pro user:</h2>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                                <p>We with our top talented team members work for making your life better and easier.</p>
-                           
-                            </div>
-                        </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-4">
+                        <img src="{% static 'assets/img/mission.svg' %}" alt="311 alert" class="round" height="200">
+
+                        <p class=" text-start">
+
+                            <br>
+                            <strong>Our Mission is</strong>
+                            Recognizing the challenges of staying up-to-date with 311 alerts, our mission revolves around simplifying and streamlining your access to this vital information.
+
+                                </p>
                     </div>
+
+
+                    <div class="col-md-4 col-sm-12">
+                        <img src="{% static 'assets/img/intro.svg' %}" alt="311 alert" class="round" height="200">
+
+                        <p class=" text-start">
+                            <br>
+                            <strong>Our Services </strong>
+                            include the provision of both HPD and 311 Realtime alerts, a key feature designed to deliver instantaneous notifications, ensuring you're always informed about the most recent developments.
+                        </p>
+                    </div>
+
+
+
+
+                    <div class="col-md-4 col-sm-12">
+                        <img src="{% static 'assets/img/user-friendly-website.svg' %}" alt="311 alert" height="200">
+                
+                        <p class=" text-end">
+                            <br>
+                            <strong>Our user-friendly </strong> website has been meticulously crafted for effortless navigation, enabling you to easily access these crucial updates.
+
+                                </p>
+                    </div>
+            
+                     <div class="col-md-4 col-sm-12">
+                        <img src="{% static 'assets/img/notifications.svg' %}" alt="311 alert" height="200">
+                
+                        <p class=" text-end">
+                         
+                            <br>
+                            <strong>We Simplify and Streamline </strong> the information.
+                            We understand the importance of staying informed about 311 complaints and violations. With our HPD and 311 Realtime alerts, we aim to eliminate the complexities of monitoring these issues.
+                       
+                                </p>
+                    </div>
+
+                     <div class="col-md-4 col-sm-12">
+                        <img src="{% static 'assets/img/easy-management.svg' %}" alt="311 alert" height="200">
+                
+                        <p class=" text-end">
+                                           <br>
+                            <strong>For Efficient Property Management </strong>
+                        
+                            311Alert allows you to focus on efficiently managing your properties with confidence and precision.
+
+                                </p>
+                    </div>
+
+                </div>
                     <div class="col-xl-6 col-lg-6">
                         <div class="app-img">
                             <img src="{% static 'assets/img/shape/available-app.png' %}" alt="">
                         </div>
                     </div>
-                </div>
             </div>
+        </div>
             <!-- Shape -->
             <div class="app-shape">
                 <img src="{% static 'assets/img/shape/app-shape-top.png' %}" alt="" class="app-shape-top heartbeat d-none d-lg-block">
@@ -50,12 +163,13 @@
                 <div class="row justify-content-between align-items-center">
                     <div class="offset-xl-1 offset-lg-1 col-xl-5 col-lg-5">
                         <div class="say-something-cap">
-                            <h2>Say Hello To The Collaboration Hub.</h2>
+                            <h2>Welcome to 311Alert</h2>
+                            <p>where staying informed is not just a necessity but a seamless experience</p>
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-3">
                         <div class="say-btn">
-                            <a href="{% url 'contact' %}" class="btn radius-btn">Contact Us</a>
+                            <a href="{% url 'register' %}" class="btn radius-btn">Sign Up</a>
                         </div>
                     </div>
                 </div>
@@ -66,6 +180,9 @@
                 <img src="{% static 'assets/img/shape/say-shape-right.pn' %}" alt="" class="say-shape2 d-none d-lg-block">
             </div>
         </div>
+
+
+</section>
         <!-- Say Something End -->
      
 {% endblock %}
