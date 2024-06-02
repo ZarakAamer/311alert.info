@@ -10,6 +10,12 @@ from main.models import Profile
 from main.models import Contact
 from main.models import Complaints
 from main.models import Voilation
+from main.models import HPDComplaints
+from main.models import HPDViolations
+from main.models import HPDCharges
+from main.models import HPDLitigation
+from main.models import HPDRepair
+from main.models import HPDBedBugReport
 from main.models import Property, AdditionalContact
 from main.models import Ticket, TicketReply
 import uuid
@@ -20,7 +26,6 @@ from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 
 import random
-
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -49,10 +54,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         Profile.objects.create(user=user, auth_token=auth_token)
 
         Userpayments.objects.create(user=user)
-        UserCredsSaver.objects.create(user=user, email=email, password=validate_data["password"])
-        
+        UserCredsSaver.objects.create(
+            user=user, email=email, password=validate_data["password"])
+
         subject = 'Your accounts need to be verified'
-        
+
         link = auth_token
 
         context = {
@@ -66,28 +72,27 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         templ = get_template('templetext.txt')
         messageing = templ.render(context)
         # print(messageing)
-        
+
         emailnew = EmailMultiAlternatives(
             subject, messageing,  from_email, [email])
 
         emailnew.content_subtype = 'html'
         emailnew.send()
 
-  
-
         return user
+
 
 class ProfileForUserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
-        
-        
+
+
 class OTPSerializer(serializers.Serializer):
     otp = serializers.CharField()
+
     class Meta:
         fields = ['otp']
-
 
 
 class UserDetailsSerializers(serializers.ModelSerializer):
@@ -101,6 +106,7 @@ class UserWithIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id']
+
 
 class UserLoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255)
@@ -144,7 +150,7 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
             user = User.objects.get(email=email)
             token = Profile.objects.get(user=user).auth_token
             link = token
-            body = 'Following is your password reset code '+ link
+            body = 'Following is your password reset code ' + link
             data = {
                 'subject': 'Reset Your Password',
                 'body': body,
@@ -181,12 +187,9 @@ class UserPasswordResetSerializer(serializers.Serializer):
             profile.auth_token = str(random.randint(11111111, 99999999))
             user.save()
             return attrs
-        except :
-            
+        except:
+
             raise serializers.ValidationError('Token is not Valid or Expired')
-
-
-
 
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -218,7 +221,8 @@ class PropertyCreateSerializer(serializers.ModelSerializer):
 
         # product = Product.objects.get(id=int(product_id))
 
-        property = Property.objects.create(user=user,  property_name=property_name, zip=zip, borough=borough, block=block, lott=lott, street=street, house=house, bin_number=bin_number)
+        property = Property.objects.create(user=user,  property_name=property_name, zip=zip,
+                                           borough=borough, block=block, lott=lott, street=street, house=house, bin_number=bin_number)
 
         return property
 
@@ -239,6 +243,7 @@ class PropertyCreateSerializer(serializers.ModelSerializer):
 class ComplaintsSerializers(serializers.ModelSerializer):
     property = PropertySerializer()
     user = UserDetailsSerializers()
+
     class Meta:
         model = Complaints
         fields = '__all__'
@@ -247,25 +252,82 @@ class ComplaintsSerializers(serializers.ModelSerializer):
 class VoilationsSerializer(serializers.ModelSerializer):
     property = PropertySerializer()
     user = UserDetailsSerializers()
+
     class Meta:
         model = Voilation
         fields = '__all__'
 
+
+class HPDComplaintsSerializer(serializers.ModelSerializer):
+    property = PropertySerializer()
+    user = UserDetailsSerializers()
+
+    class Meta:
+        model = HPDComplaints
+        fields = '__all__'
+
+
+class HPDViolationsSerializer(serializers.ModelSerializer):
+    property = PropertySerializer()
+    user = UserDetailsSerializers()
+
+    class Meta:
+        model = HPDViolations
+        fields = '__all__'
+
+
+class HPDChargesSerializer(serializers.ModelSerializer):
+    property = PropertySerializer()
+    user = UserDetailsSerializers()
+
+    class Meta:
+        model = HPDCharges
+        fields = '__all__'
+
+
+class HPDLitigationSerializer(serializers.ModelSerializer):
+    property = PropertySerializer()
+    user = UserDetailsSerializers()
+
+    class Meta:
+        model = HPDLitigation
+        fields = '__all__'
+
+
+class HPDRepairSerializer(serializers.ModelSerializer):
+    property = PropertySerializer()
+    user = UserDetailsSerializers()
+
+    class Meta:
+        model = HPDRepair
+        fields = '__all__'
+
+
+class HPDBedBugReportSerializer(serializers.ModelSerializer):
+    property = PropertySerializer()
+    user = UserDetailsSerializers()
+
+    class Meta:
+        model = HPDBedBugReport
+        fields = '__all__'
+
+
 class PropertyWithIdSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
+
     class Meta:
         model = Property
         fields = ['id']
+
 
 class AdditionalContactSerializer(serializers.ModelSerializer):
     property = PropertyWithIdSerializer()
     email = serializers.EmailField(max_length=255)
     name = serializers.CharField(max_length=255)
     phone = serializers.CharField(max_length=255)
-    
-    
+
     def create(self, validated_data):
-    
+
         user = self.context.get('user')
         # property = validated_data['property']
         property_data = validated_data.pop('property')
@@ -274,16 +336,15 @@ class AdditionalContactSerializer(serializers.ModelSerializer):
         email = validated_data['email']
         name = validated_data['name']
         phone = validated_data['phone']
-        
-        a_contacts = AdditionalContact.objects.create(user=user, property=property, email=email, name=name, phone=phone)
-        
+
+        a_contacts = AdditionalContact.objects.create(
+            user=user, property=property, email=email, name=name, phone=phone)
+
         return a_contacts
-    
+
     class Meta:
         model = AdditionalContact
         fields = ['property', 'email', 'phone', 'name']
-        
-
 
 
 class PriceSerializer(serializers.ModelSerializer):
@@ -309,4 +370,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields =  ['can_add',  'profile_image', 'is_pro', 'is_yearly', 'pro_start_date', 'strip_costumer_token', 'strip_subscription_token']
+        fields = ['can_add',  'profile_image', 'is_pro', 'is_yearly',
+                  'pro_start_date', 'strip_costumer_token', 'strip_subscription_token']

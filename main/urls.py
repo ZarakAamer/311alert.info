@@ -95,9 +95,6 @@ urlpatterns = [
          name='hpd_bedbug_by_property'),
     # -------------------accounts urls----------------
 
-
-
-
     path('register-attempt', register, name='register'),
     path('login-attempt', login_attempt, name='login'),
     path('logout-attempt', logout_attempt, name='logout'),

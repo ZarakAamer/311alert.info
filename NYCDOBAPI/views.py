@@ -2,19 +2,19 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, UserPasswordResetSerializer, UserProfileSerializer, UserRegistrationSerializer
-from .serializers import PropertySerializer, PropertyCreateSerializer, AdditionalContactSerializer
+from .serializers import PropertySerializer, PropertyCreateSerializer, AdditionalContactSerializer, HPDBedBugReportSerializer, HPDRepairSerializer, HPDChargesSerializer, HPDComplaintsSerializer, HPDViolationsSerializer, HPDLitigationSerializer
 from .serializers import ContactSerializer, PriceSerializer, UserDetailsSerializers, ProfileForUserDataSerializer, ComplaintsSerializers, VoilationsSerializer, OTPSerializer
 from django.contrib.auth import authenticate
 from .renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
-from main.models import AdditionalContact, Profile, UserCredsSaver
+from main.models import AdditionalContact, Profile, UserCredsSaver, HPDComplaints, HPDViolations, HPDRepair, HPDCharges, HPDLitigation, HPDBedBugReport
 from rest_framework.decorators import api_view
 from django.shortcuts import render, get_object_or_404
 from main.models import User, Property, Price, Complaints, Voilation
 from django.conf import settings
 from django.template.loader import get_template
-
+from rest_framework import generics
 from django.core.mail import EmailMultiAlternatives, EmailMessage
 import random
 
@@ -42,8 +42,6 @@ class UserRegistrationView(APIView):
         return Response({'token': token, 'msg': 'Registration Successful'}, status=status.HTTP_201_CREATED)
 
 
-
-
 class UserLoginView(APIView):
     renderer_classes = [UserRenderer]
 
@@ -64,11 +62,12 @@ class UserLoginView(APIView):
                 user=user_for_data)
             user_data = UserDetailsSerializers(user_for_data, many=False)
             user_properties = PropertySerializer(user_property, many=True)
-            user_additional_contacts = AdditionalContactSerializer(user_a_contacts, many=True)
+            user_additional_contacts = AdditionalContactSerializer(
+                user_a_contacts, many=True)
 
             user_profile = ProfileForUserDataSerializer(
                 user_profile, many=False)
-            return Response({'msg': 'Login Success', 'user': user_data.data, 'user_profile': user_profile.data, 'Properties': user_properties.data, 'additional_contacts':user_additional_contacts.data,  'token': token}, status=status.HTTP_200_OK)
+            return Response({'msg': 'Login Success', 'user': user_data.data, 'user_profile': user_profile.data, 'Properties': user_properties.data, 'additional_contacts': user_additional_contacts.data,  'token': token}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Email is not verified'}, status=400)
 
@@ -103,7 +102,6 @@ class UserPasswordResetView(APIView):
         return Response({'msg': 'Password Reset Successfully'}, status=status.HTTP_200_OK)
 
 
-
 class VerifyRegisteration(APIView):
     renderer_classes = [UserRenderer]
 
@@ -113,9 +111,8 @@ class VerifyRegisteration(APIView):
             data = request.data
             serializer = OTPSerializer(data=data)
             if serializer.is_valid(raise_exception=True):
-                
+
                 otp = serializer.data['otp']
-                
 
                 profile_obj = Profile.objects.get(auth_token=otp)
 
@@ -124,9 +121,10 @@ class VerifyRegisteration(APIView):
                         return Response({'msg': 'Account is already verified'}, status=status.HTTP_200_OK)
                     else:
                         profile_obj.is_verified = True
-                        profile_obj.auth_token = str(random.randint(11111111, 99999999))
+                        profile_obj.auth_token = str(
+                            random.randint(11111111, 99999999))
                         profile_obj.save()
-                        
+
                         subject = 'Welcome to 311Alert'
                         user = profile_obj.user
                         fname = user.first_name
@@ -145,12 +143,11 @@ class VerifyRegisteration(APIView):
                         templ = get_template('welcometemplate.txt')
                         messageing = templ.render(context)
                         emailnew = EmailMultiAlternatives(
-                            subject, messageing, from_email, [ user.email])
+                            subject, messageing, from_email, [user.email])
 
                         emailnew.content_subtype = 'html'
                         emailnew.send()
 
-                        
                         return Response({'msg': 'Account verified successfully'}, status=status.HTTP_200_OK)
                 else:
                     return Response({'msg': 'Invalid Url !!!'}, status=status.HTTP_400_BAD_REQUEST)
@@ -229,10 +226,6 @@ class PropertyDeleteView(APIView):
             return Response({'msg': 'unexpected Error Occured'}, status=status.HTTP_201_CREATED)
 
 
-
-
-
-
 class AdditionalContactsListView(APIView):
     renderer_classes = [UserRenderer]
     permission_classes = [IsAuthenticated]
@@ -254,7 +247,6 @@ class AdditionalContactView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         print(serializer.data)
-        
 
         return Response({'msg': 'Additional Contact added  Successful'}, status=status.HTTP_201_CREATED)
 
@@ -279,8 +271,6 @@ class AdditionalContactDeleteView(APIView):
 
         except:
             return Response({'msg': 'unexpected Error Occured'}, status=status.HTTP_201_CREATED)
-
-
 
 
 class PriceView(APIView):
@@ -324,3 +314,63 @@ class UserProfileView(APIView):
         profile.save()
 
         return Response({'msg': 'profile Updated Successful'}, status=status.HTTP_201_CREATED)
+
+
+class HPDComplaintsListView(generics.ListCreateAPIView):
+    queryset = HPDComplaints.objects.all()
+    serializer_class = HPDComplaintsSerializer
+
+
+class HPDComplaintsDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HPDComplaints.objects.all()
+    serializer_class = HPDComplaintsSerializer
+
+
+class HPDViolationsListView(generics.ListCreateAPIView):
+    queryset = HPDViolations.objects.all()
+    serializer_class = HPDViolationsSerializer
+
+
+class HPDViolationsDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HPDViolations.objects.all()
+    serializer_class = HPDViolationsSerializer
+
+
+class HPDChargesListView(generics.ListCreateAPIView):
+    queryset = HPDCharges.objects.all()
+    serializer_class = HPDChargesSerializer
+
+
+class HPDChargesDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HPDCharges.objects.all()
+    serializer_class = HPDChargesSerializer
+
+
+class HPDRepairListView(generics.ListCreateAPIView):
+    queryset = HPDRepair.objects.all()
+    serializer_class = HPDRepairSerializer
+
+
+class HPDRepairDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HPDRepair.objects.all()
+    serializer_class = HPDRepairSerializer
+
+
+class HPDLitigationListView(generics.ListCreateAPIView):
+    queryset = HPDLitigation.objects.all()
+    serializer_class = HPDLitigationSerializer
+
+
+class HPDLitigationDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HPDLitigation.objects.all()
+    serializer_class = HPDLitigationSerializer
+
+
+class HPDBedBugReportListView(generics.ListCreateAPIView):
+    queryset = HPDBedBugReport.objects.all()
+    serializer_class = HPDBedBugReportSerializer
+
+
+class HPDBedBugReportDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HPDBedBugReport.objects.all()
+    serializer_class = HPDBedBugReportSerializer
